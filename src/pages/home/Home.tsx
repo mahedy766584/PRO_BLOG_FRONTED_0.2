@@ -1,29 +1,69 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from "@/components/ui/button";
+import ProBlogForm from "@/form/ProBlogForm";
+import ProBlogInput from "@/form/ProBlogInput";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 const Home = () => {
 
+    const dispatch = useAppDispatch();
+    const [login] = useLoginMutation();
+
     const formHandler: SubmitHandler<FieldValues> = async (data) => {
         console.log(data)
-        data.preventDefault();
-        const form = data.target
-        const username = form.username.value
-        const password = form.password.value
-        console.log({
-            username,
-            password
-        })
+        const toastId = toast.loading('Loading...')
+        const userInfo = {
+            userName: data.username,
+            password: data.password,
+        };
+
+        try {
+            const res = await login(userInfo).unwrap();
+            const user = verifyToken(res.data?.accessToken);
+            dispatch(setUser({ user: user, token: res.data?.accessToken }));
+            toast.success(res?.message, { id: toastId, duration: 2000 })
+            console.log(res)
+        } catch (err: any) {
+            const errorMessage =
+                err?.data?.errorSources?.[0]?.message ||
+                err?.data?.message ||
+                "Something went wrong!";
+            toast.error(`${errorMessage}`, { id: toastId, duration: 2000 });
+        }
+
+    };
+
+    const defaultValues = {
+        username: "user04",
+        password: "User04"
     };
 
     return (
         <div>
             <h1>This is my tes form</h1>
-            <form onSubmit={formHandler}>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" name="username"/>
-                <label htmlFor="password">Password</label>
-                <input type="text" id="password" name="password"/>
-                <button type="submit">Submit</button>
-            </form>
+            <ProBlogForm onSubmit={formHandler} defaultValues={defaultValues}>
+
+                <ProBlogInput
+                    type="text"
+                    name="username"
+                    label="Username"
+                    rules={{ required: "Username is required" }}
+                />
+                <ProBlogInput
+                    type="text"
+                    name="password"
+                    label="Password"
+                    rules={{ required: "Password is required" }}
+                />
+
+                <Button type="submit">Submit</Button>
+
+            </ProBlogForm>
         </div>
     );
 };
