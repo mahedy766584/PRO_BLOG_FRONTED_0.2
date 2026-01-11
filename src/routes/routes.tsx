@@ -1,5 +1,5 @@
 import MainLayout from "@/layout/MainLayout";
-import Home from "@/pages/home/Home";
+import SmartHome from "@/pages/home/SmartHome";
 import { createBrowserRouter } from "react-router-dom";
 
 export const proBlogRoute = createBrowserRouter([
@@ -9,7 +9,7 @@ export const proBlogRoute = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home />
+                element: <SmartHome/>
             }
         ]
     }

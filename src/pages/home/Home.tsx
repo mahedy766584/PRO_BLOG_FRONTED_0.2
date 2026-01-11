@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import ProBlogForm from "@/form/ProBlogForm";
 import ProBlogInput from "@/form/ProBlogInput";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
-import { setUser } from "@/redux/features/auth/authSlice";
+import { logout, setUser } from "@/redux/features/auth/authSlice";
+import { useGetAllBlogQuery } from "@/redux/features/blogManagement.api";
 import { useAppDispatch } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
@@ -13,6 +14,13 @@ const Home = () => {
 
     const dispatch = useAppDispatch();
     const [login] = useLoginMutation();
+
+    const handleLogout = () =>{
+        dispatch(logout());
+    };
+
+    const { data: blogs } = useGetAllBlogQuery(undefined);
+    console.log(blogs)
 
     const formHandler: SubmitHandler<FieldValues> = async (data) => {
         console.log(data)
@@ -64,6 +72,11 @@ const Home = () => {
                 <Button type="submit">Submit</Button>
 
             </ProBlogForm>
+
+            <div>
+
+                <Button className="mt-10" onClick={handleLogout}>Logout</Button>
+            </div>
         </div>
     );
 };
