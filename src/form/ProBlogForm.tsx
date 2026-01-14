@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form } from "@/components/ui/form";
 import type { ReactNode } from "react";
 import { FormProvider, useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
@@ -14,32 +13,21 @@ type TFormProps = {
 } & TFormConfig;
 
 const ProBlogForm = ({ children, onSubmit, defaultValues = {}, resolver }: TFormProps) => {
-
-
-    const formConfig: TFormConfig = {};
-
-    if (defaultValues) {
-        formConfig["defaultValues"] = defaultValues;
-    }
-
-    if (resolver) {
-        formConfig["resolver"] = resolver;
-    }
-
-    const methods = useForm(formConfig);
+    const methods = useForm({
+        defaultValues,
+        resolver,
+    });
 
     const submit: SubmitHandler<FieldValues> = (data) => {
         onSubmit(data);
-        methods.reset();
+        methods.reset(); 
     };
 
     return (
         <FormProvider {...methods}>
-            <Form {...methods}>
-                <form onSubmit={methods.handleSubmit(submit)}>
-                    {children}
-                </form>
-            </Form>
+            <form onSubmit={methods.handleSubmit(submit)} className="space-y-4">
+                {children}
+            </form>
         </FormProvider>
     );
 };

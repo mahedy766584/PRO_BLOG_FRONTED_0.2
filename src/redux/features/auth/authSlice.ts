@@ -17,7 +17,7 @@ export type TAuthState = {
     token: null | string;
 };
 
-const initialState = {
+const initialState:TAuthState = {
     user: null,
     token: null,
 };

@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/redux/hooks";
 import Home from "./Home";
-import LandingPage from "../landingPage/LandingPage";
+import LandingPage from "../landing/LandingPage";
 
 const SmartHome = () => {
 
