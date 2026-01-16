@@ -5,8 +5,8 @@ import ProBlogProfileInput from "@/form/ProBlogProfileInput";
 import ProBlogTextarea from "@/form/ProBlogTextarea";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { Button } from "../ui/button";
-import { useAddNewUserMutation } from "@/redux/userManagement.api";
 import { toast } from "sonner";
+import { useAddNewUserMutation } from "@/redux/features/userManagement.api";
 
 type SignupViewProps = {
     switchToLogin: () => void;

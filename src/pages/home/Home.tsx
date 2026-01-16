@@ -1,35 +1,43 @@
-import { Button } from "@/components/ui/button";
-import { logout } from "@/redux/features/auth/authSlice";
+import BlogCard from "@/components/leftCard/BlogCard";
+import Container from "@/components/Container";
 import { useGetAllBlogQuery } from "@/redux/features/blogManagement.api";
-import { useAppDispatch } from "@/redux/hooks";
+import type { TBlog } from "@/types";
 
 const Home = () => {
 
-    const dispatch = useAppDispatch();
+    const { data: blogs, isLoading } = useGetAllBlogQuery(undefined);
 
-    const { data: blogs, isLoading, isError } = useGetAllBlogQuery(undefined);
+    console.log(blogs)
 
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Something went wrong</p>;
+    const skeletonCount = blogs?.data?.result?.length || 5;
 
-    const handleLogout = () => {
-        dispatch(logout());
-    };
 
     return (
-        <>
-            <Button onClick={handleLogout}>Logout</Button>
-
-            <div className="space-y-4">
-                {blogs?.map((blog: any) => (
-                    <div key={blog._id} className="border p-4 rounded">
-                        <h2 className="font-semibold">{blog.title}</h2>
-                        <p className="text-sm text-gray-500">{blog.author}</p>
+        <div className="bg-[#f2f8f7]">
+            <Container>
+                <div className="w-full h-[calc(100vh-30px)]">
+                    {/* Left side */}
+                    <div className="mx-auto max-w-6xl flex items-start justify-between gap-6 mb-6">
+                        <div>
+                            <h1 className="text-xl font-medium mt-5 mb-10">
+                                <span className="bg-[#00AAA1] text-[#E8F3F3]">Featured</span> This month
+                            </h1>
+                            <div className="h-[74vh] overflow-auto scrollbar-custom grid grid-cols-2 gap-3">
+                                {isLoading
+                                    ? Array.from({ length: skeletonCount }).map((_, idx) => <BlogCard key={idx} loading />)
+                                    : blogs?.data?.result?.map((blog: TBlog) => (
+                                        <BlogCard key={blog._id} blog={blog} />
+                                    ))}
+                            </div>
+                        </div>
+                        {/* Right side */}
+                        <div className="pb-5">
+                            {/* <RightCart /> */}
+                        </div>
                     </div>
-                ))}
-            </div>
-
-        </>
+                </div>
+            </Container>
+        </div>
     );
 };
 

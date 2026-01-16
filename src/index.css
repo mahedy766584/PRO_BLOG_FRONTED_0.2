@@ -152,27 +152,42 @@
   }
 }
 
-/* Medium-style minimal scrollbar */
-.custom-scroll::-webkit-scrollbar {
-  width: 3px;
+/* ===== Light Mode Scrollbar ===== */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #00aaa1 #e8f3f3;
 }
 
-.custom-scroll::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 6px 0;
+.scrollbar-custom::-webkit-scrollbar {
+  width: 5px;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #00aaa1;
   border-radius: 9999px;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.35);
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #008f88;
 }
 
-/* Firefox */
-.custom-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #00AAA1 transparent;
+.scrollbar-custom::-webkit-scrollbar-track {
+  background-color: #e8f3f3;
+}
+
+/* ===== Dark Mode Scrollbar ===== */
+.dark .scrollbar-custom {
+  scrollbar-color: #00aaa1 #1f2933;
+}
+
+.dark .scrollbar-custom::-webkit-scrollbar-track {
+  background-color: #1f2933;
+}
+
+.dark .scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #00aaa1;
+}
+
+.dark .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #22d3c5;
 }

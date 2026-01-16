@@ -4,9 +4,10 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 import storage from 'redux-persist/lib/storage'
 import authReducer from "./features/auth/authSlice";
 
+
 const persistConfig = {
     key: "auth",
-    storage
+    storage,
 };
 
 const persistAuthReducer = persistReducer(persistConfig, authReducer);
@@ -22,10 +23,9 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
             }
         }
-    ).concat(baseApi.middleware)
+    ).concat(baseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
 export const persistor = persistStore(store);

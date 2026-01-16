@@ -11,16 +11,27 @@ import {
 import Logo from "../logo/Logo";
 import { NAV_ITEMS } from "./navLinks";
 import NavDropdown from "./NavDropdown";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/redux/features/auth/authSlice";
+import { Button } from "@/components/ui/button";
 
 
 const Header = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <header className="bg-[#E8F3F3] text-[#333333]">
             <nav className="mx-auto flex max-w-6xl items-center justify-between py-4">
 
                 <Logo />
+
+                <Button className="cursor-pointer" onClick={handleLogout}>Logout</Button>
 
                 {/* Desktop Navigation */}
                 <div className="hidden items-center gap-6 lg:flex">
