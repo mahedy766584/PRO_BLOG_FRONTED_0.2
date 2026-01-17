@@ -1,16 +1,11 @@
 import BlankLayout from "@/layout/BlankLayout";
 import MainLayout from "@/layout/MainLayout";
-import Home from "@/pages/home/Home";
 import SmartHome from "@/pages/home/SmartHome";
 import LandingPage from "@/pages/landing/LandingPage";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 export const proBlogRoute = createBrowserRouter([
-    {
-        path: "/",
-        element: <SmartHome />
-    },
     {
         path: "/landing",
         element: <BlankLayout />,
@@ -28,9 +23,9 @@ export const proBlogRoute = createBrowserRouter([
         </ProtectedRoute>,
         children: [
             {
-                path: "home",
-                element: <Home />
-            }
+                index: true,
+                element: <SmartHome/>
+            },
         ]
     }
 ]);

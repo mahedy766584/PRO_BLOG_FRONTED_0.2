@@ -7,10 +7,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useGetCommentByBlogPostQuery } from "@/redux/features/commentManagement.api";
 import { Link } from "react-router-dom";
-import { CalendarDays, Clock } from "lucide-react";
-import ProfileAvatar from "../profile/ProfileAvatar";
 import type { BlogCardProps } from "@/types";
 import BlogActions from "./BlogActions";
+import ProfileAvatarContent from "../shared/ProfileAvatarContent";
 
 
 const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
@@ -34,7 +33,17 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
     const [addLike] = useAddLikeMutation();
     const [createBookmark] = useCreateBookmarkMutation();
 
-    if (loading) return <BlogCardSkeleton />
+    if (loading) {
+        return (
+            <BlogCardSkeleton
+                avatar={false}
+                rows={3}
+                rowHeight={12}
+                width="100%"
+            />
+        )
+    };
+
     if (!blog) return null;
 
     const postedDate = blog.createdAt ? moment(blog.createdAt).format("DD MMM YYYY") : "No date";
@@ -64,36 +73,27 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
     };
 
     return (
-        <div key={blog._id} className="container mx-auto px-4 bg-[#FFFFFF] py-6 rounded-md">
+        <div key={blog._id} className="container mx-auto px-2 bg-[#FFFFFF] py-3 rounded-md">
 
-            <div className="flex w-100.25 flex-col space-y-4">
+            <div className="flex w-90 flex-col space-y-4">
                 <Link to={`/home/blog/${blog?._id}/${blog?.slug}`}>
-                    <div className="flex flex-col lg:space-y-0 space-y-2 justify-between gap-5 cursor-pointer ">
+                    <div className="flex flex-col lg:space-y-0 space-y-2 justify-between gap-5 cursor-pointer">
                         <button className="bg-[#DFF1F0] text-[#666666] px-3 py-0.5 rounded-[3px] text-sm font-normal w-fit text-start">{blog.category?.name}</button>
                         <h1 className="text-2xl text-[#222222] font-bold">{blog.title}</h1>
+
                         <img
-                            className="lg:w-100.25 lg:h-57.25 object-cover rounded"
+                            className="lg:w-90 lg:h-57.25 object-cover rounded"
                             alt={blog.title}
                             src={blog.coverImage}
                         />
 
                         <div className="relative space-y-3.5">
-                            <div className="text-[#777777] flex items-center gap-1">
-                                <ProfileAvatar
-                                    profileImage={blog.author?.profileImage}
-                                    userFirstName={blog.author?.name?.firstName ?? ""}
-                                />
-                                <div className="h-5 w-px rounded-md bg-[#777777]"></div>
-                                <span className="flex items-center gap-2">
-                                    <CalendarDays size={16} />
-                                    <p>{postedDate}</p>
-                                </span>
-                                <div className="h-5 w-px rounded-md bg-[#777777]"></div>
-                                <div className="flex items-center gap-2">
-                                    <Clock size={16} />
-                                    {blog?.readTime}
-                                </div>
-                            </div>
+                            <ProfileAvatarContent
+                                profileImage={blog.author?.profileImage ?? ""}
+                                firstName={blog.author?.name?.firstName ?? ""}
+                                postedDate={postedDate}
+                                readTime={blog?.readTime ?? ""}
+                            />
                             <p className="text-[#555555] text-[18px] font-normal">{blog?.excerpt?.slice(0, 90)}...</p>
                         </div>
                     </div>

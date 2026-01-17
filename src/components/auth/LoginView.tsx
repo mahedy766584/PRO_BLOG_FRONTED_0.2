@@ -38,7 +38,7 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
             console.log(res)
             if (res.success) {
                 closeModal();    
-                navigate("/home"); 
+                navigate("/"); 
             }
 
         } catch (err: any) {

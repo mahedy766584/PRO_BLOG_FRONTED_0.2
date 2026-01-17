@@ -52,9 +52,9 @@ const SignupView = ({ switchToLogin }: SignupViewProps) => {
 
 
     return (
-        <div className="h-[80vh] overflow-auto custom-scroll">
+        <div className="h-[80vh] overflow-auto scrollbar-custom">
             <h2 className="text-3xl text-center font-semibold mb-6">
-                Join ProBlog
+                Join <span className="text-[#00AAA1]">Pro</span>Blog<span className="text-[#00AAA1]">.</span>
             </h2>
 
             <div className="px-6">

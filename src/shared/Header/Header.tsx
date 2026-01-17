@@ -28,7 +28,6 @@ const Header = () => {
     return (
         <header className="bg-[#E8F3F3] text-[#333333]">
             <nav className="mx-auto flex max-w-6xl items-center justify-between py-4">
-
                 <Logo />
 
                 <Button className="cursor-pointer" onClick={handleLogout}>Logout</Button>
