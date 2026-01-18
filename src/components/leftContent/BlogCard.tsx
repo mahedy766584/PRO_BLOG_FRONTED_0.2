@@ -71,13 +71,14 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
             toast.error(err?.data?.message || "Something went wrong!");
         }
     };
+    
 
     return (
         <div key={blog._id} className="container mx-auto px-2 bg-[#FFFFFF] py-3 rounded-md">
 
             <div className="flex w-90 flex-col space-y-4">
                 <Link to={`/home/blog/${blog?._id}/${blog?.slug}`}>
-                    <div className="flex flex-col lg:space-y-0 space-y-2 justify-between gap-5 cursor-pointer">
+                    <div className="flex flex-col lg:space-y-0 space-y-2 justify-between gap-5 cursor-pointer overflow-hidden">
                         <button className="bg-[#DFF1F0] text-[#666666] px-3 py-0.5 rounded-[3px] text-sm font-normal w-fit text-start">{blog.category?.name}</button>
                         <h1 className="text-2xl text-[#222222] font-bold">{blog.title}</h1>
 

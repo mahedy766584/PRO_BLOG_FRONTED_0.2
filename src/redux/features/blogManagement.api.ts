@@ -9,10 +9,18 @@ const blogManagementApi = baseApi.injectEndpoints({
                     method: "GET",
                 }
             }
-        })
+        }),
+        writeBlog: builder.mutation({
+            query: (data) => ({
+                url: "/blogs/create-blog-post",
+                method: "POST",
+                body: data,
+            })
+        }),
     })
 });
 
 export const {
     useGetAllBlogQuery,
+    useWriteBlogMutation,
 } = blogManagementApi;

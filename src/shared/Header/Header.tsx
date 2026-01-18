@@ -55,7 +55,7 @@ const Header = () => {
                 {/* Right Actions (Desktop) */}
                 <div className="hidden items-center gap-6 lg:flex">
                     <Search size={20} className="cursor-pointer" />
-                    <Link to={'/write'}><SquarePen size={20} className="cursor-pointer" /></Link>
+                    <Link to={'/writeBlog'}><SquarePen size={20} className="cursor-pointer" /></Link>
 
                     <button className="flex items-center gap-1">
                         EN <ChevronDown size={16} />

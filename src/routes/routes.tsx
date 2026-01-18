@@ -4,6 +4,7 @@ import SmartHome from "@/pages/home/SmartHome";
 import LandingPage from "@/pages/landing/LandingPage";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import WriteBlog from "@/pages/blog/WriteBlog";
 
 export const proBlogRoute = createBrowserRouter([
     {
@@ -24,8 +25,12 @@ export const proBlogRoute = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <SmartHome/>
+                element: <SmartHome />
             },
+            {
+                path: "/writeBlog",
+                element: <WriteBlog />
+            }
         ]
     }
 ]);

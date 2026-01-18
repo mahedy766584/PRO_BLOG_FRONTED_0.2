@@ -26,15 +26,15 @@ const ProBlogProfileInput = ({
             name={name}
             control={control}
             render={({ field: { onChange } }) => (
-                <div className="space-y-2 flex flex-col">
+                <div className="space-y-2 flex flex-col w-full">
                     <p className="text-sm font-medium text-start">{label}</p>
 
-                    <div className="relative flex justify-center items-center">
+                    <div className="relative flex justify-center items-center w-full py-4 border border-dotted rounded">
                         {/* Avatar Preview */}
                         <img
                             src={preview}
                             alt="profile"
-                            className="h-28 w-28  object-cover border cursor-pointer "
+                            className="h-32 w-32  object-cover border cursor-pointer "
                             onClick={() => inputRef.current?.click()} // open file picker on click
                         />
 
@@ -46,7 +46,7 @@ const ProBlogProfileInput = ({
                                     setPreview(fallbackImage);
                                     onChange(null);
                                 }}
-                                className="absolute -top-2 -right-2 rounded-full bg-destructive p-1 text-white shadow"
+                                className="absolute -top-2 -right-2 rounded-full bg-destructive p-1 text-white shadow cursor-pointer"
                             >
                                 <X size={14} />
                             </button>
