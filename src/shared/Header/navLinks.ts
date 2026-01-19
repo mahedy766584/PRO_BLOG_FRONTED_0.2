@@ -20,6 +20,10 @@ export const NAV_ITEMS: TNavItem[] = [
     href: "/",
   },
   {
+    label: "About",
+    href: "/about",
+  },
+  {
     label: "Categories",
     children: [
       { label: "Web Development", href: "/home/library/web" },

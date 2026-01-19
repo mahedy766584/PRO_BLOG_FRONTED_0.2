@@ -5,6 +5,8 @@ import LandingPage from "@/pages/landing/LandingPage";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import WriteBlog from "@/pages/blog/WriteBlog";
+import About from "@/pages/about/About";
+import AboutOfAuthor from "@/pages/about/AboutOfAuthor";
 
 export const proBlogRoute = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ export const proBlogRoute = createBrowserRouter([
             {
                 path: "/writeBlog",
                 element: <WriteBlog />
+            },
+            {
+                path: "/about",
+                element: <About/>
+            },
+            {
+                path: "/about/:authorId",
+                element: <AboutOfAuthor/>
             }
         ]
     }

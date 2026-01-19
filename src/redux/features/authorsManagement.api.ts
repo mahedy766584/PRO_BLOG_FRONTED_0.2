@@ -10,11 +10,20 @@ const authorManagementApi = baseApi.injectEndpoints({
                         method: "GET"
                     }
                 }
+            }),
+            getSingleAuthor: builder.query({
+                query: (authorId) => {
+                    return {
+                        url: `/users/authors/${authorId}`,
+                        method: "GET"
+                    }
+                }
             })
         }
     )
 });
 
 export const {
-    useGetAllAuthorQuery
+    useGetAllAuthorQuery,
+    useGetSingleAuthorQuery,
 } = authorManagementApi;

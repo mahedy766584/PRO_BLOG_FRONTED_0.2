@@ -48,9 +48,42 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --bg-main: #00AAA1;
+  --bg-second: #F2F8F7;
+  --bg-third: #FFFFFF;
+
+  --text-main: #00AAA1;
+  --text-second: #FFFFFF;
+  --text-third: #222222;
+  --text-forth: #555555;
+
+  --border-main: #00AAA1;
+
 }
 
 
+@utility border-main {
+  border-color: var(--border-main);
+}
+@utility bg-main {
+  background-color: var(--bg-main);
+};
+@utility bg-second {
+  background-color: var(--bg-second)
+};
+@utility text-main {
+  color: var(--text-main)
+};
+@utility text-second {
+  color: var(--text-second)
+};
+@utility text-third {
+  color: var(--text-third)
+};
+@utility text-forth {
+  color: var(--text-forth)
+};
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -106,6 +139,30 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+
+    }
+
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+
+    }
+
+  }
 }
 
 .dark {
