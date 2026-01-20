@@ -6,18 +6,16 @@ const authorManagementApi = baseApi.injectEndpoints({
             getAllAuthor: builder.query({
                 query: () => {
                     return {
-                        url: "/users/authors",
+                        url: "/authors",
                         method: "GET"
                     }
                 }
             }),
             getSingleAuthor: builder.query({
-                query: (authorId) => {
-                    return {
-                        url: `/users/authors/${authorId}`,
-                        method: "GET"
-                    }
-                }
+                query: (userId) => ({
+                    url: `/authors/author/:${userId}`,
+                    method: "GET",
+                })
             })
         }
     )

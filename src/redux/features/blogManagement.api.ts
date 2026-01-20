@@ -10,6 +10,14 @@ const blogManagementApi = baseApi.injectEndpoints({
                 }
             }
         }),
+        getSingleBlog: builder.query({
+            query: (blogId) => {
+                return {
+                    url: `/blogs/${blogId}`,
+                    method: "GET",
+                }
+            }
+        }),
         writeBlog: builder.mutation({
             query: (data) => ({
                 url: "/blogs/create-blog-post",
@@ -23,4 +31,5 @@ const blogManagementApi = baseApi.injectEndpoints({
 export const {
     useGetAllBlogQuery,
     useWriteBlogMutation,
+    useGetSingleBlogQuery,
 } = blogManagementApi;

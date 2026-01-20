@@ -7,6 +7,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import WriteBlog from "@/pages/blog/WriteBlog";
 import About from "@/pages/about/About";
 import AboutOfAuthor from "@/pages/about/AboutOfAuthor";
+import ContactUs from "@/pages/contactUs/ContactUs";
+import BlogDetails from "@/pages/blog/BlogDetails";
 
 export const proBlogRoute = createBrowserRouter([
     {
@@ -38,9 +40,17 @@ export const proBlogRoute = createBrowserRouter([
                 element: <About/>
             },
             {
-                path: "/about/:authorId",
+                path: "/about/:userId",
                 element: <AboutOfAuthor/>
-            }
+            },
+            {
+                path: "/contact",
+                element: <ContactUs/>
+            },
+            {
+                path: "/blogDetail/:blogId/:slug",
+                element: <BlogDetails/>
+            },
         ]
     }
 ]);

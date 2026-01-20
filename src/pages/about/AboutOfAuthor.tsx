@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 
 const AboutOfAuthor = () => {
 
-    const { authorId } = useParams();
+    const { userId: _id } = useParams();
 
-    const { data: author } = useGetSingleAuthorQuery(authorId);
+    const { data: author } = useGetSingleAuthorQuery(_id);
+
+    console.log(_id)
 
     console.log(author)
 

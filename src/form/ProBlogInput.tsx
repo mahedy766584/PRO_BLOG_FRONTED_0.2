@@ -22,7 +22,7 @@ const ProBlogInput = ({ type, name, label, disabled, rules }: TInputProps) => {
             name={name}
             rules={rules}
             render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full!">
 
                     {label && <FormLabel>{label}</FormLabel>}
 

@@ -7,18 +7,20 @@ import { MoveRight, SquarePen } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type TAuthor = {
-    profileImage: string;
-    name: {
-        firstName: string;
-        lastName: string;
-    };
+    user: {
+        profileImage: string;
+        name: {
+            firstName: string;
+            lastName: string;
+        };
+        _id: string;
+    }
     _id: string;
 };
 
 const About = () => {
 
     const { data: authors } = useGetAllAuthorQuery(undefined);
-    console.log(authors?.data)
 
     return (
         <div>
@@ -67,26 +69,29 @@ const About = () => {
 
                     <div className="grid grid-cols-2 gap-6">
                         {
-                            authors?.data?.map((author: TAuthor) => (
+                            authors?.data?.map((author: TAuthor) =>{
+                                console.log(author?.user._id)
+                                return(
                                 <div key={author?._id} className="flex gap-4 justify-center items-center">
-                                    <img src={author?.profileImage} className="w-24 h-24 object-cover" />
+                                    <img src={author?.user?.profileImage} className="w-24 h-24 object-cover" />
                                     <div className="space-y-4 px-2">
                                         <span className="flex items-center text-third text-lg font-medium gap-2">
-                                            <h3>{author?.name?.firstName}</h3>
-                                            <h3>{author?.name?.lastName}</h3>
+                                            <h3>{author?.user?.name?.firstName}</h3>
+                                            <h3>{author?.user?.name?.lastName}</h3>
                                         </span>
-                                        <Link to={`/about/${author?._id}`}>
+
+                                        <Link to={`/about/${author?.user?._id}`}>
                                             <button className="flex cursor-pointer items-center gap-2 font-medium text-main">See details about author <MoveRight /></button>
                                         </Link>
                                     </div>
                                 </div>
-                            ))
+                            )})
                         }
                     </div>
 
                 </div>
 
-            </Container>
+            </Container >
 
             <div className="mx-auto bg-second w-3/4 mt-20 h-67 flex justify-center items-center">
                 <div className="space-y-7 flex justify-center items-center flex-col">
@@ -104,7 +109,7 @@ const About = () => {
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 };
 
