@@ -1,5 +1,5 @@
 import { CalendarDays, Clock } from "lucide-react";
-import ProfileAvatar from "../profile/ProfileAvatar";
+import ProfileAvatar from "./ProfileAvatar";
 
 type ProfileAvatarContentProps = {
     profileImage: string;

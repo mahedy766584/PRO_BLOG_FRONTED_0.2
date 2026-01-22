@@ -9,6 +9,7 @@ import About from "@/pages/about/About";
 import AboutOfAuthor from "@/pages/about/AboutOfAuthor";
 import ContactUs from "@/pages/contactUs/ContactUs";
 import BlogDetails from "@/pages/blog/BlogDetails";
+import FaQuestion from "@/pages/faQuestion/FaQuestion";
 
 export const proBlogRoute = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ export const proBlogRoute = createBrowserRouter([
             {
                 path: "/blogDetail/:blogId/:slug",
                 element: <BlogDetails/>
+            },
+            {
+                path: "/faQuestion",
+                element: <FaQuestion/>
             },
         ]
     }

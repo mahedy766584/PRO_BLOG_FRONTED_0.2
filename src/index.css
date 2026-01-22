@@ -1,7 +1,32 @@
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:wght@400..900&display=swap");
+
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root {
+    --font-sans: "Noto Sans", system-ui, sans-serif;
+    --font-serif: "Playfair Display", serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

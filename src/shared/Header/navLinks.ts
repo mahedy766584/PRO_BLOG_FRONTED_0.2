@@ -37,6 +37,7 @@ export const NAV_ITEMS: TNavItem[] = [
       { label: "Profile", href: "/home/profile" },
       { label: "Settings", href: "/home/settings" },
       { label: "Contact", href: "/contact" },
+      { label: "FA question", href: "/faQuestion" },
     ],
   },
 ];

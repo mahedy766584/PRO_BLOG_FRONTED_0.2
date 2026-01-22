@@ -1,7 +1,7 @@
 import type { BlogCardProps } from "@/types";
 import BlogCardSkeleton from "@/utils/BlogCardSkeleton";
 import moment from "moment";
-import ProfileAvatarContent from "../shared/ProfileAvatarContent";
+import ProfileAvatarContent from "../common/profile/ProfileAvatarContent";
 
 const RightCard = ({ blog, loading = false }: BlogCardProps) => {
 

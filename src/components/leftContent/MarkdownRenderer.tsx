@@ -1,26 +1,18 @@
-import DOMPurify from "dompurify";
-import Markdown from 'react-markdown'
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
 
 type MarkdownRendererProps = {
-    content: string;
+  content: string;
 };
 
 const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
-
-    const sanitized = DOMPurify.sanitize(content);
-
-    return (
-        <div className="prose prose-lg max-w-none">
-            <Markdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-            >
-                {sanitized}
-            </Markdown>
-        </div>
-    );
+  return (
+    <article className="blog-prose prose prose-lg max-w-none dark:prose-invert">
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {content}
+      </ReactMarkdown>
+    </article>
+  );
 };
 
 export default MarkdownRenderer;

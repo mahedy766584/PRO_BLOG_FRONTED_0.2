@@ -1,19 +1,19 @@
 import DOMPurify from "dompurify";
+import "./blog-prose.css";
 
 type HTMLRendererProps = {
-    html: string;
+  html: string;
 };
 
 const HTMLRenderer = ({ html }: HTMLRendererProps) => {
+  const clean = DOMPurify.sanitize(html);
 
-    const clean = DOMPurify.sanitize(html)
-    
-    return (
-        <div
-            className="blog-content"
-            dangerouslySetInnerHTML={{ __html: clean }}
-        />
-    );
+  return (
+    <article
+      className="blog-prose prose prose-lg max-w-none dark:prose-invert"
+      dangerouslySetInnerHTML={{ __html: clean }}
+    />
+  );
 };
 
 export default HTMLRenderer;

@@ -10,8 +10,6 @@ const Home = () => {
 
     const { data: blogs, isLoading } = useGetAllBlogQuery(undefined);
 
-    console.log(blogs)
-
     const skeletonCount = blogs?.data?.result?.length || 5;
 
 

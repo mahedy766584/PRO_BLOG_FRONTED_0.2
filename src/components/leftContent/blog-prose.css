@@ -1,0 +1,23 @@
+:root {
+  --text-main: #00AAA1;
+  --text-second: #FFFFFF;
+  --text-third: #222222;
+  --text-forth: #555555;
+}
+
+@layer base {
+  .prose h1 {
+    font-size: 2.25rem;
+    color: var(--text-third);
+  }
+
+  .prose p {
+    font-size: 16px;
+    color: var(--text-forth);
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    color: var(--text-third)
+  }
+};

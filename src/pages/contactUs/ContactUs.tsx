@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
-import SectionDescription from "@/components/shared/SectionDescription";
-import SectionTitle from "@/components/shared/SectionTitle";
+import SectionDescription from "@/components/common/SectionDescription";
+import SectionTitle from "@/components/common/SectionTitle";
 import ProBlogForm from "@/form/ProBlogForm";
 import ProBlogInput from "@/form/ProBlogInput";
 import ProBlogTextarea from "@/form/ProBlogTextarea";
@@ -85,9 +85,9 @@ const ContactUs = () => {
                                         className="text-start w-5/6"
                                     />
                                     <div className="flex items-center gap-4 ml-10">
-                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><Facebook/></button>
-                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><X/></button>
-                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><Youtube/></button>
+                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><Facebook /></button>
+                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><X /></button>
+                                        <button className="w-8 h-8 bg-second hover:bg-main hover:text-second flex justify-center items-center p-1.5 duration-300 rounded-md cursor-pointer"><Youtube /></button>
                                     </div>
                                 </div>
                             </div>

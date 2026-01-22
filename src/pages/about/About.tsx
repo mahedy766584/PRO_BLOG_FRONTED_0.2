@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import { FeaturedCard } from "@/components/features/FeaturedCard";
-import SectionDescription from "@/components/shared/SectionDescription";
-import SectionTitle from "@/components/shared/SectionTitle";
+import SectionDescription from "@/components/common/SectionDescription";
+import SectionTitle from "@/components/common/SectionTitle";
 import { useGetAllAuthorQuery } from "@/redux/features/authorsManagement.api";
 import { MoveRight, SquarePen } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -69,23 +69,24 @@ const About = () => {
 
                     <div className="grid grid-cols-2 gap-6">
                         {
-                            authors?.data?.map((author: TAuthor) =>{
+                            authors?.data?.map((author: TAuthor) => {
                                 console.log(author?.user._id)
-                                return(
-                                <div key={author?._id} className="flex gap-4 justify-center items-center">
-                                    <img src={author?.user?.profileImage} className="w-24 h-24 object-cover" />
-                                    <div className="space-y-4 px-2">
-                                        <span className="flex items-center text-third text-lg font-medium gap-2">
-                                            <h3>{author?.user?.name?.firstName}</h3>
-                                            <h3>{author?.user?.name?.lastName}</h3>
-                                        </span>
+                                return (
+                                    <div key={author?._id} className="flex gap-4 justify-center items-center">
+                                        <img src={author?.user?.profileImage} className="w-24 h-24 object-cover" />
+                                        <div className="space-y-4 px-2">
+                                            <span className="flex items-center text-third text-lg font-medium gap-2">
+                                                <h3>{author?.user?.name?.firstName}</h3>
+                                                <h3>{author?.user?.name?.lastName}</h3>
+                                            </span>
 
-                                        <Link to={`/about/${author?.user?._id}`}>
-                                            <button className="flex cursor-pointer items-center gap-2 font-medium text-main">See details about author <MoveRight /></button>
-                                        </Link>
+                                            <Link to={`/about/${author?.user?._id}`}>
+                                                <button className="flex cursor-pointer items-center gap-2 font-medium text-main">See details about author <MoveRight /></button>
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                            )})
+                                )
+                            })
                         }
                     </div>
 

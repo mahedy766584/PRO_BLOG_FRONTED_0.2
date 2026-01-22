@@ -1,37 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCreateBookmarkMutation } from "@/redux/features/bookMarkManagement.api";
-import { useAddLikeMutation, useGetLikeByBlogPostQuery } from "@/redux/features/likeManagement.api";
 import BlogCardSkeleton from "@/utils/BlogCardSkeleton";
 import moment from "moment";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useGetCommentByBlogPostQuery } from "@/redux/features/commentManagement.api";
 import { Link } from "react-router-dom";
 import type { BlogCardProps } from "@/types";
 import BlogActions from "./BlogActions";
-import ProfileAvatarContent from "../shared/ProfileAvatarContent";
+import ProfileAvatarContent from "../common/profile/ProfileAvatarContent";
 
 
-const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
-
-    const [open, setOpen] = useState(false);
-
-    const showDrawer = () => setOpen(true);
+const BlogCard = ({ blog, loading = false, showActions = true }: BlogCardProps) => {
 
     const blogId = blog?._id;
-
-    const { data: likeResponse } = useGetLikeByBlogPostQuery(
-        { id: blogId },
-        { skip: !blogId }
-    );
-
-    const { data: commentResponse } = useGetCommentByBlogPostQuery(
-        { id: blogId },
-        { skip: !blogId }
-    );
-
-    const [addLike] = useAddLikeMutation();
-    const [createBookmark] = useCreateBookmarkMutation();
 
     if (loading) {
         return (
@@ -48,30 +25,6 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
 
     const postedDate = blog.createdAt ? moment(blog.createdAt).format("DD MMM YYYY") : "No date";
 
-
-    const likeCount = likeResponse?.data?.likeCount || 0;
-    const commentCount = commentResponse?.data?.length || 0;
-
-    const handleLike = async () => {
-        if (!blogId) return;
-        try {
-            const res = await addLike({ blogPost: blogId }).unwrap();
-            toast.success(res.data.message);
-        } catch (err: any) {
-            toast.error(err?.data?.message || "Something went wrong!");
-        }
-    };
-
-    const handleBookMark = async () => {
-        if (!blogId) return;
-        try {
-            const res = await createBookmark({ blogPost: blogId }).unwrap();
-            toast.success(res.message);
-        } catch (err: any) {
-            toast.error(err?.data?.message || "Something went wrong!");
-        }
-    };
-    
 
     return (
         <div key={blog._id} className="container mx-auto px-2 bg-[#FFFFFF] py-3 rounded-md">
@@ -99,7 +52,7 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
                         </div>
                     </div>
                 </Link>
-                <BlogActions onLike={handleLike} likeCount={likeCount} onOpenComment={showDrawer} onBookmark={handleBookMark} open={open} setOpen={setOpen} blogId={blogId} commentCount={commentCount} />
+                {showActions && <BlogActions blogId={blogId} />}
             </div>
 
         </div >

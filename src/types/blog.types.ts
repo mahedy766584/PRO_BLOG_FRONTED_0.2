@@ -28,4 +28,5 @@ export type TBlog = {
 export type BlogCardProps = {
     blog?: TBlog;
     loading?: boolean;
+    showActions?: boolean;
 };

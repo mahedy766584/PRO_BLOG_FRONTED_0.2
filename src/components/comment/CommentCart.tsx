@@ -1,6 +1,6 @@
 import type { TComment } from "@/types/comment.type";
 import { MessageCircle, ThumbsUp } from "lucide-react";
-import ProfileAvatar from "../profile/ProfileAvatar";
+import ProfileAvatar from "../common/profile/ProfileAvatar";
 import BlogContent from "../leftContent/BlogContent";
 
 type SingleCommentProps = {
