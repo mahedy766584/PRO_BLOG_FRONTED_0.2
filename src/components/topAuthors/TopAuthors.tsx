@@ -123,11 +123,11 @@ const TopAuthors = () => {
                 </div>
             </div>
 
-            <div className="mt-16">
+            <div className="mt-16 ">
                 <h1 className="text-xl font-medium mt-10 pb-10">
                     <span className="bg-[#00AAA1] text-[#E8F3F3]">search</span> with tags
                 </h1>
-                <div className="w-87.5 flex flex-wrap gap-3">
+                <div className="lg:w-87.5 lg:flex lg:flex-wrap lg:space-y-0 space-y-2.5  gap-3">
                     {
                         tagCategories?.map((category) => (
                             <button key={category.id} className="px-6 flex items-center justify-center text-[#666666] py-1 border rounded border-solid border-[#666666] hover:bg-[#00AAA1] duration-300 hover:text-white hover:border-white font-normal cursor-pointer">{category.title}</button>

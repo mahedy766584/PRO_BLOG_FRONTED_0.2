@@ -17,8 +17,8 @@ const ProfileAvatarContent = (
                 profileImage={profileImage}
                 userFirstName={firstName ?? ""}
             />
-            <div className="h-4 w-px rounded-md bg-[#777777]"></div>
-            <span className="flex items-center gap-1.5">
+            <div className="h-4 w-px lg:flex hidden rounded-md bg-[#777777]"></div>
+            <span className="lg:flex hidden items-center gap-1.5">
                 <CalendarDays size={16} />
                 <p>{postedDate}</p>
             </span>

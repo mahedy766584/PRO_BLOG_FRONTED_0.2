@@ -82,6 +82,7 @@
   --text-second: #FFFFFF;
   --text-third: #222222;
   --text-forth: #555555;
+  --text-five: #333333;
 
   --border-main: #00AAA1;
 
@@ -108,6 +109,9 @@
 };
 @utility text-forth {
   color: var(--text-forth)
+};
+@utility text-five {
+  color: var(--text-five)
 };
 
 @media (prefers-color-scheme: light) {

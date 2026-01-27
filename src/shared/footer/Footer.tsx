@@ -4,8 +4,8 @@ import { quickLinks, tagCategories } from "@/components/topAuthors/instImage";
 import { Facebook, Instagram, X } from "lucide-react";
 
 const Footer = () => (
-  <footer className="bg-[#F2F8F7] h-full w-full mt-20 text-[#555555]">
-    <div className="flex justify-between max-w-6xl mx-auto py-14">
+  <footer className="bg-[#F2F8F7] z-50 h-full w-full mt-20 text-[#555555]">
+    <div className="lg:flex lg:px-0 px-4 lg:space-y-0 space-y-8 justify-between max-w-6xl mx-auto py-14">
       <div>
         <Logo />
         <p className="text-[#555555] w-52.5 mt-4">Did you come here for something in particular or just general Riker</p>
@@ -28,8 +28,8 @@ const Footer = () => (
       </div>
       <div className="flex flex-col space-y-4">
         <h2 className="text-[#222222] text-lg font-medium">Subscribe for newsletter</h2>
-        <div className="flex items-center w-fit">
-          <input className="bg-[#DFF1F0] outline-none! border-none! px-4 py-2 rounded-l-md focus:outline-none! focus:ring-0! focus:border-none! outline-o!" placeholder="Your email" />
+        <div className="flex items-center w-50 lg:w-fit">
+          <input className="bg-[#DFF1F0] outline-none! border-none! px-4 py-2 rounded-l-md focus:outline-none! focus:ring-0! focus:border-none! outline-o! lg:w-fit w-40" placeholder="Your email" />
           <button className="px-6 py-2 cursor-pointer rounded-r-md bg-[#00AAA1] text-white">Subscribe</button>
         </div>
         <div className="mt-7">

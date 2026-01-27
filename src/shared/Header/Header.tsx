@@ -4,33 +4,20 @@ import {
     ChevronDown,
     Menu,
     X,
-    Moon,
-    Search,
     SquarePen,
 } from "lucide-react";
 import Logo from "../logo/Logo";
 import { NAV_ITEMS } from "./navLinks";
 import NavDropdown from "./NavDropdown";
-import { useAppDispatch } from "@/redux/hooks";
-import { logout } from "@/redux/features/auth/authSlice";
-import { Button } from "@/components/ui/button";
-
+import DropdownMenuAvatar from "./DropdownMenuAvatar";
+import SearchMenu from "./SearchMenu";
 
 const Header = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
-
-    const dispatch = useAppDispatch();
-
-    const handleLogout = () => {
-        dispatch(logout());
-    };
-
     return (
-        <header className="bg-[#E8F3F3] text-[#333333]">
-            <nav className="mx-auto flex max-w-6xl items-center justify-between py-4">
+        <header className="bg-[#E8F3F3] text-third">
+            <nav className="mx-auto flex lg:px-0 px-0.5 max-w-6xl items-center justify-between py-4">
                 <Logo />
-
-                <Button className="cursor-pointer" onClick={handleLogout}>Logout</Button>
 
                 {/* Desktop Navigation */}
                 <div className="hidden items-center gap-6 lg:flex">
@@ -54,16 +41,16 @@ const Header = () => {
 
                 {/* Right Actions (Desktop) */}
                 <div className="hidden items-center gap-6 lg:flex">
-                    <Search size={20} className="cursor-pointer" />
+
+                    <SearchMenu />
+
                     <Link to={'/writeBlog'}><SquarePen size={20} className="cursor-pointer" /></Link>
 
                     <button className="flex items-center gap-1">
                         EN <ChevronDown size={16} />
                     </button>
 
-                    <button className="rounded-md bg-[#00AAA1] p-1 text-white">
-                        <Moon size={20} />
-                    </button>
+                    <DropdownMenuAvatar />
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -117,9 +104,9 @@ const Header = () => {
 
                         {/* Mobile Actions */}
                         <div className="mt-4 flex items-center gap-5">
-                            <Search size={20} />
-                            <SquarePen size={20} />
-                            <Moon size={20} />
+                            <SearchMenu/>
+                            <Link to={'/writeBlog'}><SquarePen size={20} className="cursor-pointer" /></Link>
+                            <DropdownMenuAvatar />
                         </div>
                     </div>
                 </div>

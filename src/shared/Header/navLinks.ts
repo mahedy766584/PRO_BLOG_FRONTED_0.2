@@ -1,27 +1,23 @@
 export type TNavItem =
   | {
+    label: string;
+    href: string;
+    children?: never;
+  }
+  | {
+    label: string;
+    children: {
       label: string;
       href: string;
-      children?: never;
-    }
-  | {
-      label: string;
-      children: {
-        label: string;
-        href: string;
-      }[];
-      href?: never;
-    };
+    }[];
+    href?: never;
+  };
 
 
 export const NAV_ITEMS: TNavItem[] = [
   {
     label: "Home",
     href: "/",
-  },
-  {
-    label: "About",
-    href: "/about",
   },
   {
     label: "Categories",
@@ -34,8 +30,7 @@ export const NAV_ITEMS: TNavItem[] = [
   {
     label: "Pages",
     children: [
-      { label: "Profile", href: "/home/profile" },
-      { label: "Settings", href: "/home/settings" },
+      { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
       { label: "FA question", href: "/faQuestion" },
     ],

@@ -20,8 +20,8 @@ const BlogCard = ({ blog, loading = false }: BlogCardProps) => {
     const postedDate = blog.createdAt ? moment(blog.createdAt).format("DD MMM YYYY") : "No date";
 
     return (
-        <div className="w-full rounded flex gap-2 ">
-            <img className="rounded-l w-52 h-48" src={blog.coverImage} />
+        <div className="w-full rounded lg:flex gap-2 lg:space-y-0 space-y-2">
+            <img className="rounded-l lg:w-52 lg:h-48" src={blog.coverImage} />
             <div className="space-y-3 px-3 mt-3">
                 <button className="bg-[#DFF1F0] text-[#666666] px-3 py-0.5 rounded-[3px] text-sm font-normal">{blog.category?.name}</button>
                 <h1 className="text-xl text-[#222222] font-bold">{blog.title}</h1>

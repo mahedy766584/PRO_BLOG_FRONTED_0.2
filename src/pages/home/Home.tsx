@@ -17,14 +17,14 @@ const Home = () => {
         <>
             <div className="bg-[#f2f8f7]">
                 <Container>
-                    <div className="w-full h-[calc(100vh-30px)]">
+                    <div className="w-full lg:h-[calc(100vh-30px)]">
                         {/* Left side */}
-                        <div className="flex justify-between mb-6">
-                            <div>
+                        <div className="lg:flex justify-between mb-6 relative">
+                            <div className="lg:px-0 px-2.5">
                                 <h1 className="text-xl font-medium mt-10 mb-10">
                                     <span className="bg-[#00AAA1] text-[#E8F3F3]">Featured</span> This month
                                 </h1>
-                                <div className="h-[74vh] w-full overflow-auto scrollbar-custom grid grid-cols-2 gap-3">
+                                <div className="h-[74vh] w-full overflow-auto scrollbar-custom grid lg:grid-cols-2 grid-cols-1 gap-3">
                                     {isLoading
                                         ? Array.from({ length: skeletonCount }).map((_, idx) => <BlogCard key={idx} loading />)
                                         : blogs?.data?.result?.map((blog: TBlog) => (
@@ -43,13 +43,12 @@ const Home = () => {
 
             <Container>
                 {/* Recent blog content */}
-                <div className="flex gap-6 mt-12 items-start max-w-6xl mx-auto">
+                <div className="lg:flex lg:px-0 px-2.5 gap-6 mt-12 items-start max-w-6xl mx-auto">
                     {/* Left side */}
                     <RecentBlog />
                     {/* Right side */}
                     <div>
                         <TopAuthors />
-
                     </div>
                 </div>
             </Container>

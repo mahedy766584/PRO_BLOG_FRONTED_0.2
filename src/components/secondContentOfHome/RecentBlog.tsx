@@ -15,7 +15,7 @@ const RecentBlog = () => {
                 <span className="bg-[#00AAA1] text-[#E8F3F3]">Recently</span> Posted
             </h1>
 
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 lg:space-y-0 space-y-5 gap-4">
                 {isLoading
                     ? Array.from({ length: skeletonCount }).map((_, idx) => <BlogCard key={idx} loading />)
                     : blogs?.data?.result?.map((blog: TBlog) => (
@@ -23,7 +23,7 @@ const RecentBlog = () => {
                     ))}
             </div>
 
-            <div className="mt-16 flex items-center gap-3 justify-center">
+            <div className="mt-16 lg:flex hidden items-center gap-3 justify-center">
                 <div>
                     <button className="px-4 gap-1.5 flex items-center justify-center text-[#666666] py-1 border rounded border-solid border-[#666666] hover:bg-[#00AAA1] duration-300 hover:text-white hover:border-white font-normal cursor-pointer "><MoveLeft /> Prev</button>
                 </div>
