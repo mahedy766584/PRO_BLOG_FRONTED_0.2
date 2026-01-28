@@ -1,20 +1,29 @@
-import BlankLayout from "@/layout/BlankLayout";
 import MainLayout from "@/layout/MainLayout";
-import SmartHome from "@/pages/home/SmartHome";
-import LandingPage from "@/pages/landing/LandingPage";
-import { createBrowserRouter } from "react-router-dom";
+import ErrorPage from "@/pages/error/ErrorPage";
 import ProtectedRoute from "./ProtectedRoute";
-import WriteBlog from "@/pages/blog/WriteBlog";
-import About from "@/pages/about/About";
+import { createBrowserRouter, ScrollRestoration } from "react-router-dom";
+import BlankLayout from "@/layout/BlankLayout";
+import LandingPage from "@/pages/landing/LandingPage";
+import { lazy, Suspense } from "react";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import AboutOfAuthor from "@/pages/about/AboutOfAuthor";
-import ContactUs from "@/pages/contactUs/ContactUs";
-import BlogDetails from "@/pages/blog/BlogDetails";
-import FaQuestion from "@/pages/faQuestion/FaQuestion";
+import HomeWrapper from "@/pages/home/HomeWrapper";
+
+// ⚡ Lazy Loading Pages (Performance Optimization)
+const BlogDetails = lazy(() => import("@/pages/blog/BlogDetails"));
+const WriteBlog = lazy(() => import("@/pages/blog/WriteBlog"));
+const About = lazy(() => import("@/pages/about/About"));
+const ContactUs = lazy(() => import("@/pages/contactUs/ContactUs"));
+const FAQ = lazy(() => import("@/pages/faQuestion/FaQuestion"));
 
 export const proBlogRoute = createBrowserRouter([
     {
         path: "/landing",
-        element: <BlankLayout />,
+        element: <>
+            <ScrollRestoration />
+            <BlankLayout />
+        </>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -24,13 +33,17 @@ export const proBlogRoute = createBrowserRouter([
     },
     {
         path: "/",
-        element: <ProtectedRoute role={["user", "author", "admin"]}>
-            <MainLayout />
-        </ProtectedRoute>,
+        element: <>
+            <ScrollRestoration />
+            <ProtectedRoute role={["user", "author", "admin"]}>
+                <MainLayout />
+            </ProtectedRoute>
+        </>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
-                element: <SmartHome />
+                element: <HomeWrapper/>
             },
             {
                 path: "/writeBlog",
@@ -38,23 +51,25 @@ export const proBlogRoute = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <About/>
+                element: <About />
             },
             {
                 path: "/about/:userId",
-                element: <AboutOfAuthor/>
+                element: <AboutOfAuthor />
             },
             {
                 path: "/contact",
-                element: <ContactUs/>
+                element: <ContactUs />
             },
             {
                 path: "/blogDetail/:blogId/:slug",
-                element: <BlogDetails/>
+                element: <Suspense fallback={<LoadingSpinner fullScreen={true} />}>
+                    <BlogDetails />
+                </Suspense>
             },
             {
                 path: "/faQuestion",
-                element: <FaQuestion/>
+                element: <FAQ />
             },
         ]
     }

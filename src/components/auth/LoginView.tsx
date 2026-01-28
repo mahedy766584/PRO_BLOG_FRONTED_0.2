@@ -9,22 +9,35 @@ import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser } from "@/redux/features/auth/authSlice";
+import { useState } from "react"; 
 
+import {
+    NativeSelect,
+    NativeSelectOption,
+} from "@/components/ui/native-select"
 
 type LoginViewProps = {
     switchToSignup: () => void;
     closeModal: () => void;
 };
 
-const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
+const demoCredentials: Record<string, { username: string; password: string }> = {
+    superAdmin: { username: "superadmin", password: "superadmin" },
+    admin: { username: "admin01", password: "Admin01" },
+    author: { username: "user01", password: "User01" },
+    user: { username: "user04", password: "User04" },
+};
 
+const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [login] = useLoginMutation();
 
+    const [formValues, setFormValues] = useState({ username: "", password: "" });
+    const [formKey, setFormKey] = useState(0);
+
     const loginHandler: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data);
-        const toastId = toast.loading('Loading in..');
+        const toastId = toast.loading('Logging in...');
         const userInfo = {
             userName: data.username,
             password: data.password,
@@ -33,12 +46,12 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
         try {
             const res = await login(userInfo).unwrap();
             const user = verifyToken(res.data.accessToken);
-            dispatch(setUser({ user: user, token: res.data?.accessToken }))
-            toast.success(res?.message, { id: toastId, duration: 2000 })
-            console.log(res)
+            dispatch(setUser({ user: user, token: res.data?.accessToken }));
+            toast.success(res?.message, { id: toastId, duration: 2000 });
+
             if (res.success) {
-                closeModal();    
-                navigate("/"); 
+                closeModal();
+                navigate("/");
             }
 
         } catch (err: any) {
@@ -48,12 +61,16 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
                 "Something went wrong!";
             toast.error(`${errorMessage}`, { id: toastId, duration: 2000 });
         }
-
     };
 
-    const defaultValues = {
-        username: "user04",
-        password: "User04"
+    const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const role = e.target.value;
+        const selectedCreds = demoCredentials[role];
+
+        if (selectedCreds) {
+            setFormValues(selectedCreds);
+            setFormKey((prev) => prev + 1);
+        }
     };
 
     return (
@@ -63,7 +80,20 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
             </h2>
 
             <div className="grid gap-4">
-                <ProBlogForm onSubmit={loginHandler} defaultValues={defaultValues}>
+
+                <NativeSelect onChange={handleRoleChange}>
+                    <NativeSelectOption value="">🚀 Quick Demo Login (Select Role)</NativeSelectOption>
+                    <NativeSelectOption value="superAdmin">🛡️ Super Admin</NativeSelectOption>
+                    <NativeSelectOption value="admin">🔧 Admin</NativeSelectOption>
+                    <NativeSelectOption value="author">✍️ Author</NativeSelectOption>
+                    <NativeSelectOption value="user">👤 User</NativeSelectOption>
+                </NativeSelect>
+
+                <ProBlogForm
+                    key={formKey}
+                    onSubmit={loginHandler}
+                    defaultValues={formValues}
+                >
                     <div className="space-y-6">
                         <div>
                             <ProBlogInput
@@ -82,7 +112,9 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
                             />
                         </div>
                     </div>
-                    <Button className="text-center mt-6 w-full cursor-pointer" type="submit">Sign Now</Button>
+                    <Button className="text-center mt-6 w-full cursor-pointer" type="submit">
+                        Sign Now
+                    </Button>
                 </ProBlogForm>
             </div>
 
