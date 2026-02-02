@@ -8,6 +8,9 @@ import { lazy, Suspense } from "react";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import AboutOfAuthor from "@/pages/about/AboutOfAuthor";
 import HomeWrapper from "@/pages/home/HomeWrapper";
+import DashboardLayout from "@/layout/DashboardLayout";
+import Analytics from "@/pages/dashboard/Analytics/Analytics";
+import Profile from "@/pages/profile/Profile";
 
 // ⚡ Lazy Loading Pages (Performance Optimization)
 const BlogDetails = lazy(() => import("@/pages/blog/BlogDetails"));
@@ -35,7 +38,7 @@ export const proBlogRoute = createBrowserRouter([
         path: "/",
         element: <>
             <ScrollRestoration />
-            <ProtectedRoute role={["user", "author", "admin"]}>
+            <ProtectedRoute role={["user", "author", "admin", "superAdmin"]}>
                 <MainLayout />
             </ProtectedRoute>
         </>,
@@ -46,31 +49,50 @@ export const proBlogRoute = createBrowserRouter([
                 element: <HomeWrapper/>
             },
             {
-                path: "/writeBlog",
+                path: "write-blog",
                 element: <WriteBlog />
             },
             {
-                path: "/about",
-                element: <About />
+                path: "about",
+                element: <Suspense fallback={<LoadingSpinner />}><About /></Suspense>
             },
             {
-                path: "/about/:userId",
-                element: <AboutOfAuthor />
+                path: "about/:userId",
+                element: <Suspense fallback={<LoadingSpinner />}><AboutOfAuthor /></Suspense>
             },
             {
-                path: "/contact",
-                element: <ContactUs />
+                path: "contact",
+                element:  <Suspense fallback={<LoadingSpinner />}><ContactUs /></Suspense>
             },
             {
-                path: "/blogDetail/:blogId/:slug",
+                path: "blog-detail/:blogId/:slug",
                 element: <Suspense fallback={<LoadingSpinner fullScreen={true} />}>
                     <BlogDetails />
                 </Suspense>
             },
             {
-                path: "/faQuestion",
-                element: <FAQ />
+                path: "faq",
+                element: <Suspense fallback={<LoadingSpinner />}><FAQ /></Suspense>
             },
+            {
+                path: "profile",
+                element: <Suspense fallback={<LoadingSpinner />}><Profile /></Suspense>
+            },
+        ]
+    },
+
+    {
+        path: "/dashboard",
+        element: (
+            <ProtectedRoute role={["author", "admin", "superAdmin"]}>
+                <DashboardLayout/>
+            </ProtectedRoute>
+        ),
+        children: [
+            {
+                index: true,
+                element: <Suspense fallback={<LoadingSpinner />}><Analytics /></Suspense>
+            }
         ]
     }
 ]);

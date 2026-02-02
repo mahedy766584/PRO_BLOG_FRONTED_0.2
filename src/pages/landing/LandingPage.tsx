@@ -7,7 +7,7 @@ import AuthModal from "@/components/auth/AuthModal";
 
 const LandingPage = () => {
     return (
-        <div className="bg-[#f7f4ed] ">
+        <div className="bg-forth">
             <nav className="flex items-center justify-between lg:px-16! py-5! border-b-[0.5px]! border-sec! px-5!">
                 <Logo />
                 <div className="text-third flex items-center gap-8!">
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
                     <p className="lg:text-2xl text-third ">Where storytellers, thinkers, and dreamers connect through imagination.</p>
 
-                    <Button>
+                    <Button className="cursor-pointer">
                         Explore an idea
                     </Button>
 

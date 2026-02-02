@@ -9,6 +9,12 @@ const userManagementApi = baseApi.injectEndpoints({
                     method: "POST",
                     body: data,
                 })
+            }),
+            getSingleUser: builder.query({
+                query: (userId) => ({
+                    url: `/users/${userId}`,
+                    method: "GET",
+                })
             })
         }
     )
@@ -16,4 +22,5 @@ const userManagementApi = baseApi.injectEndpoints({
 
 export const {
     useAddNewUserMutation,
+    useGetSingleUserQuery,
 } = userManagementApi;

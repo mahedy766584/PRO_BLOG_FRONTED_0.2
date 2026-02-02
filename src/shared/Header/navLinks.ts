@@ -32,7 +32,7 @@ export const NAV_ITEMS: TNavItem[] = [
     children: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
-      { label: "FA question", href: "/faQuestion" },
+      { label: "FA question", href: "/faq" },
     ],
   },
 ];

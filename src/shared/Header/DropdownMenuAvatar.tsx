@@ -12,6 +12,7 @@ import { logout } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { dropdownMenuItem } from "./dropDownMenuItem";
 import { LogOutIcon, type LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type TDropDownMenu = {
     label: string;
@@ -43,17 +44,19 @@ const DropdownMenuAvatar = () => {
                         dropdownMenuItem?.map((item: TDropDownMenu) => {
                             const Icon = item?.icon;
                             return (
-                                <DropdownMenuItem key={item.label} className="group cursor-pointer hover:bg-cyan-50! hover:text-main!">
-                                    <Icon className="group-hover:text-main" />
-                                    <span className="group-hover:text-main!">{item.label}</span>
-                                </DropdownMenuItem>
+                                <Link key={item.label} to={item.href}>
+                                    <DropdownMenuItem  className="group cursor-pointer hover:bg-cyan-50! hover:text-main!">
+                                        <Icon className="group-hover:text-main" />
+                                        <span className="group-hover:text-main!">{item.label}</span>
+                                    </DropdownMenuItem>
+                                </Link>
                             )
                         })
                     }
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="group cursor-pointer hover:bg-cyan-50! hover:text-main!">
-                    <LogOutIcon className="group-hover:text-main"/>
+                    <LogOutIcon className="group-hover:text-main" />
                     <span className="group-hover:text-main!">Sign Out</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>

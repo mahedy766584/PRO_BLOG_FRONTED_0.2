@@ -19,8 +19,9 @@ const AuthModal = () => {
     return (
         <>
             <Button
+                className="cursor-pointer"
                 onClick={() => {
-                    setView("signup");
+                    setView("login");
                     setOpen(true);
                 }}
             >
@@ -44,7 +45,6 @@ const AuthModal = () => {
                         </DialogDescription>
                     </DialogHeader>
 
-                    {/* 🔹 Medium-style content switch */}
                     {view === "login" && (
                         <LoginView
                             switchToSignup={() => setView("signup")}

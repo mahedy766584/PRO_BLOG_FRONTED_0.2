@@ -54,7 +54,7 @@ const BlogActions = ({ blogId }: BlogActionsProps) => {
     };
 
     return (
-        <div className="mt-2 relative flex items-center justify-between text-sec">
+        <div className="mt-2 px-1.5 relative flex items-center justify-between text-sec">
 
             <div className="flex items-center gap-6">
 
