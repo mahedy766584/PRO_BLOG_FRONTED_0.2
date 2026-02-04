@@ -27,6 +27,7 @@
     "cmdk": "^1.1.1",
     "cobe": "^0.6.5",
     "dompurify": "^3.3.1",
+    "framer-motion": "^12.31.0",
     "jwt-decode": "^4.0.0",
     "lucide": "^0.562.0",
     "lucide-react": "^0.562.0",

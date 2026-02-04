@@ -6,10 +6,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     MapPin, Calendar, Globe, Edit3,
     Github, Twitter, Linkedin, CheckCircle2,
-    TrendingUp, FileText, Users, ArrowUpRight, Mail
+    TrendingUp, FileText, Users, ArrowUpRight, Mail,
+    PenLine, Plus, Sparkles
 } from "lucide-react";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import useCurrentUserProfile from "@/utils/UseCurrentUserProfile";
+import { Link } from "react-router-dom"; // Ensure react-router-dom is installed
 
 const Profile = () => {
     const { data: userData, isLoading } = useCurrentUserProfile();
@@ -26,29 +28,30 @@ const Profile = () => {
         email = "user@example.com",
     } = userData?.data || {};
 
-    // 🟢 Name Handling (Object vs String issue fixed)
     const firstName = name?.firstName || "Unknown";
     const lastName = name?.lastName || "User";
     const fullName = `${firstName} ${lastName}`;
-    const newData = new Date();
 
     return (
-        <div className="min-h-screen bg-gray-50/50 selection:bg-black selection:text-white pb-20 relative overflow-hidden">
-
-            {/* 🌟 1. Premium Background Mesh Gradient */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-200/30 blur-[100px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/30 blur-[100px]" />
+        <div className="min-h-screen bg-[#FAFAFA] pb-20 relative selection:bg-slate-900 selection:text-white">
+            
+            {/* 🌟 Background Ambient Mesh */}
+            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-blue-100/40 blur-[120px]" />
+                <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-100/40 blur-[120px]" />
             </div>
 
-            {/* 🌟 2. Cinematic Banner */}
-            <div className="h-64 md:h-80 w-full relative z-10 group overflow-hidden">
-                <div className="absolute inset-0 bg-linear-to-r from-gray-900 via-slate-800 to-gray-900">
-                    <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+            {/* 🌟 Cinematic Banner (Responsive Height) */}
+            <div className="h-48 md:h-80 w-full relative z-10 group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black">
+                    <div className="absolute inset-0 opacity-15 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+                    {/* Decorative pattern */}
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 </div>
-                {/* Banner Content */}
-                <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                    <Button variant="secondary" size="sm" className="shadow-2xl backdrop-blur-md bg-white/10 text-white border border-white/20 hover:bg-white/20">
+                
+                {/* Edit Cover Button */}
+                <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 group-hover:translate-y-0">
+                    <Button variant="outline" size="sm" className="bg-black/20 backdrop-blur-md text-white border-white/20 hover:bg-white/20 hover:text-white rounded-full">
                         <Edit3 size={14} className="mr-2" /> Change Cover
                     </Button>
                 </div>
@@ -56,58 +59,68 @@ const Profile = () => {
 
             <div className="relative z-20">
                 <Container>
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 -mt-24">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 -mt-20 md:-mt-28">
 
-                        {/* ➤ LEFT SIDEBAR (Sticky Identity) */}
+                        {/* ➤ LEFT SIDEBAR (Identity) */}
                         <div className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-6">
-
+                            
                             {/* 🌟 Profile Card */}
-                            <div className="bg-white rounded-[2rem] p-6 shadow-xl shadow-gray-200/50 border border-gray-100 relative overflow-hidden">
-                                {/* Avatar */}
-                                <div className="relative w-fit mx-auto -mt-16 mb-4 group">
-                                    <div className="w-40 h-40 rounded-[2rem] border-[6px] border-white shadow-2xl overflow-hidden bg-white rotate-3 group-hover:rotate-0 transition-all duration-500 ease-out">
+                            <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] p-6 shadow-2xl shadow-slate-200/50 border border-white/50 relative">
+                                {/* Avatar Wrapper */}
+                                <div className="relative w-fit mx-auto -mt-20 mb-4 group">
+                                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] border-[6px] border-white shadow-xl overflow-hidden bg-white transition-transform duration-500 group-hover:scale-105">
                                         <img
                                             src={profileImage || "https://github.com/shadcn.png"}
                                             alt={fullName}
                                             className="w-full h-full object-cover"
                                         />
                                     </div>
-                                    <div className="absolute -bottom-2 -right-2 bg-white p-1.5 rounded-full shadow-lg">
-                                        <div className="bg-emerald-500 w-5 h-5 rounded-full border-2 border-white animate-pulse"></div>
+                                    <div className="absolute bottom-1 right-1 bg-white p-1.5 rounded-full shadow-md">
+                                        <div className="bg-emerald-500 w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-white animate-pulse"></div>
                                     </div>
                                 </div>
 
-                                {/* Info */}
+                                {/* User Info */}
                                 <div className="text-center space-y-2">
-                                    <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center justify-center gap-2">
-                                        {fullName}
-                                        {(role === 'admin' || role === 'author') && <CheckCircle2 className="text-blue-500 fill-blue-50 w-6 h-6" />}
-                                    </h1>
-                                    <p className="text-gray-500 font-medium">@{userName}</p>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+                                            {fullName}
+                                        </h1>
+                                        {(role === 'admin' || role === 'author') && 
+                                            <CheckCircle2 className="text-blue-500 fill-blue-50 w-5 h-5 md:w-6 md:h-6" />
+                                        }
+                                    </div>
+                                    <p className="text-slate-500 font-medium text-sm md:text-base">@{userName}</p>
 
                                     <div className="flex justify-center gap-2 pt-2">
-                                        <Badge className="bg-black text-white hover:bg-gray-800 px-3 py-1 rounded-full uppercase text-[10px] tracking-widest">
+                                        <Badge variant="secondary" className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full uppercase text-[10px] tracking-widest border border-slate-200">
                                             {role}
                                         </Badge>
                                     </div>
                                 </div>
 
                                 {/* Bio */}
-                                <p className="mt-6 text-center text-gray-600 leading-relaxed font-light text-sm md:text-base">
+                                <p className="mt-6 text-center text-slate-600 leading-relaxed font-light text-sm md:text-base px-2">
                                     {bio}
                                 </p>
 
                                 {/* Connect Button */}
-                                <div className="mt-8">
-                                    <button className="relative w-full inline-flex h-12 overflow-hidden rounded-xl p-px focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                <div className="mt-8 space-y-6">
+                                    <button className="group relative w-full inline-flex h-11 md:h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                                         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                                        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl hover:bg-slate-900 transition-colors gap-2">
-                                            Connect Now <ArrowUpRight size={16} />
+                                        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl transition-all group-hover:bg-slate-900 gap-2">
+                                            Connect Now <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                         </span>
                                     </button>
-                                    <div className="flex justify-center gap-4 mt-6 border-t border-gray-100 pt-6">
-                                        {[Github, Twitter, Linkedin].map((Icon, i) => (
-                                            <a key={i} href="#" className="p-3 rounded-full bg-gray-50 text-gray-500 hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm">
+
+                                    {/* Social Icons */}
+                                    <div className="flex justify-center gap-4 border-t border-slate-100 pt-6">
+                                        {[
+                                            { Icon: Github, href: "#" },
+                                            { Icon: Twitter, href: "#" },
+                                            { Icon: Linkedin, href: "#" }
+                                        ].map(({ Icon, href }, i) => (
+                                            <a key={i} href={href} className="p-3 rounded-full bg-slate-50 text-slate-500 hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm border border-slate-100">
                                                 <Icon size={18} />
                                             </a>
                                         ))}
@@ -115,90 +128,112 @@ const Profile = () => {
                                 </div>
                             </div>
 
-                            {/* 🌟 Details Card */}
-                            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
-                                <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider">Details</h3>
-                                <div className="space-y-4 text-sm">
-                                    <div className="flex items-center gap-3 text-gray-600 hover:text-black transition-colors">
-                                        <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600"><MapPin size={16} /></div>
-                                        <span>San Francisco, CA (Default)</span>
+                            {/* 🌟 Info Card (Desktop Only) */}
+                            <div className="hidden lg:block bg-white/60 backdrop-blur-md rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
+                                <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
+                                    <Sparkles size={14} className="text-amber-500"/> Personal Details
+                                </h3>
+                                <div className="space-y-4 text-sm font-medium">
+                                    <div className="flex items-center gap-4 text-slate-600 group">
+                                        <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform"><MapPin size={16} /></div>
+                                        <span>Dhaka, Bangladesh</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-600 hover:text-black transition-colors">
-                                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600"><Mail size={16} /></div>
-                                        <span>{email}</span>
+                                    <div className="flex items-center gap-4 text-slate-600 group">
+                                        <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform"><Mail size={16} /></div>
+                                        <span className="truncate">{email}</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-600 hover:text-black transition-colors">
-                                        <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600"><Globe size={16} /></div>
-                                        <a href="#" className="hover:underline">Portfolio Website</a>
+                                    <div className="flex items-center gap-4 text-slate-600 group">
+                                        <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform"><Globe size={16} /></div>
+                                        <a href="#" className="hover:text-black transition-colors">mysite.com</a>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-600 hover:text-black transition-colors">
-                                        <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center text-green-600"><Calendar size={16} /></div>
-                                        <span>Joined {new Date(createdAt || newData).toLocaleDateString()}</span>
+                                    <div className="flex items-center gap-4 text-slate-600 group">
+                                        <div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform"><Calendar size={16} /></div>
+                                        <span>Joined {new Date(createdAt || new Date()).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* ➤ RIGHT CONTENT */}
-                        <div className="lg:col-span-8 space-y-8 lg:mt-6">
+                        <div className="lg:col-span-8 space-y-8 lg:mt-8">
 
-                            {/* 🌟 Stats Grid (Dummy Data Added) */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {/* 🌟 Stats Grid */}
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
                                 {[
-                                    { label: "Total Views", value: "84.2k", trend: "+12%", icon: TrendingUp, color: "text-green-600", bg: "bg-green-50" },
-                                    { label: "Articles", value: "34", trend: "New", icon: FileText, color: "text-blue-600", bg: "bg-blue-50" },
-                                    { label: "Followers", value: "2.1k", trend: "+5%", icon: Users, color: "text-purple-600", bg: "bg-purple-50" },
+                                    { label: "Total Views", value: "84.2k", trend: "+12%", icon: TrendingUp, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+                                    { label: "Articles", value: "34", trend: "Active", icon: FileText, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100" },
+                                    { label: "Followers", value: "2.1k", trend: "+5%", icon: Users, color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
                                 ].map((stat, idx) => (
-                                    <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all group">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color}`}>
-                                                <stat.icon size={20} />
-                                            </div>
-                                            <span className="text-xs font-bold bg-gray-100 px-2 py-1 rounded-full text-gray-600 group-hover:bg-black group-hover:text-white transition-colors">
-                                                {stat.trend}
-                                            </span>
+                                    <div key={idx} className={`bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl border ${stat.border} shadow-sm hover:shadow-md transition-all group relative overflow-hidden`}>
+                                        <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                                            <stat.icon size={60} className={stat.color} />
                                         </div>
-                                        <h2 className="text-3xl font-black text-gray-900">{stat.value}</h2>
-                                        <p className="text-sm text-gray-500 font-medium mt-1">{stat.label}</p>
+                                        <div className="flex flex-col gap-1 md:gap-2">
+                                            <div className="flex items-center justify-between">
+                                                <div className={`p-2 md:p-2.5 rounded-xl w-fit ${stat.bg} ${stat.color}`}>
+                                                    <stat.icon size={18} />
+                                                </div>
+                                            </div>
+                                            <div className="mt-2 md:mt-4">
+                                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">{stat.value}</h2>
+                                                <p className="text-xs md:text-sm text-slate-500 font-medium">{stat.label}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
 
-                            {/* 🌟 Content Tabs */}
-                            <div className="min-h-125">
+                            {/* 🌟 Content Area with Tabs */}
+                            <div className="min-h-[500px]">
                                 <Tabs defaultValue="articles" className="w-full">
-                                    <div className="flex items-center justify-between mb-6">
-                                        <TabsList className="bg-white p-1 rounded-full border border-gray-200 shadow-sm">
-                                            <TabsTrigger value="articles" className="rounded-full px-6 data-[state=active]:bg-black data-[state=active]:text-white transition-all">Latest Stories</TabsTrigger>
-                                            <TabsTrigger value="about" className="rounded-full px-6 data-[state=active]:bg-black data-[state=active]:text-white transition-all">About Me</TabsTrigger>
+                                    
+                                    {/* Tab Header & Action Button */}
+                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4 sticky top-[70px] lg:top-0 z-30 bg-[#FAFAFA]/80 backdrop-blur-lg py-2">
+                                        <TabsList className="bg-white p-1.5 rounded-full border border-slate-200 shadow-sm w-full sm:w-auto h-auto">
+                                            <TabsTrigger value="articles" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">
+                                                Latest Stories
+                                            </TabsTrigger>
+                                            <TabsTrigger value="about" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">
+                                                About Me
+                                            </TabsTrigger>
                                         </TabsList>
+
+                                        {/* Desktop Create Blog Button */}
+                                        <Link to="/dashboard/create-blog" className="hidden sm:block">
+                                            <Button className="rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-slate-900/20 transition-all flex items-center gap-2 px-5 h-11">
+                                                <PenLine size={16} />
+                                                <span className="font-medium">Write a Story</span>
+                                            </Button>
+                                        </Link>
                                     </div>
 
-                                    {/* 🔥 Articles Tab with Dummy Data */}
-                                    <TabsContent value="articles" className="space-y-6">
+                                    {/* 🔥 Articles Tab */}
+                                    <TabsContent value="articles" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                        
                                         {/* Featured Card */}
-                                        <div className="bg-white rounded-3xl p-1 shadow-sm border border-gray-100 group cursor-pointer hover:shadow-xl transition-all duration-300">
-                                            <div className="grid md:grid-cols-2 gap-6 p-4">
+                                        <div className="bg-white rounded-[1.5rem] p-1.5 shadow-sm border border-slate-100 group cursor-pointer hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                                            <div className="grid md:grid-cols-2 gap-4 md:gap-6 p-4">
                                                 <div className="h-48 md:h-full rounded-2xl overflow-hidden relative">
                                                     <img
                                                         src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop"
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                                                         alt="Featured"
                                                     />
-                                                    <span className="absolute top-2 right-2 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">🔥 Featured</span>
+                                                    <Badge className="absolute top-3 left-3 bg-white/90 text-black hover:bg-white backdrop-blur shadow-sm border-0">
+                                                        🔥 Featured
+                                                    </Badge>
                                                 </div>
                                                 <div className="flex flex-col justify-center space-y-3 pr-2">
-                                                    <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                                                        <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
                                                         Development
                                                     </div>
-                                                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
+                                                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
                                                         Why I moved from Redux to Zustand in 2026?
                                                     </h3>
-                                                    <p className="text-gray-500 text-sm line-clamp-2">
+                                                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
                                                         State management has evolved. Here is a deep dive into why simplicity wins over complexity in modern React apps.
                                                     </p>
-                                                    <div className="flex items-center gap-4 text-xs text-gray-400 font-medium pt-2">
+                                                    <div className="flex items-center gap-4 text-xs text-slate-400 font-medium pt-2 border-t border-slate-50 mt-2">
                                                         <span>Jan 24, 2026</span>
                                                         <span>•</span>
                                                         <span>5 min read</span>
@@ -207,35 +242,45 @@ const Profile = () => {
                                             </div>
                                         </div>
 
-                                        {/* Standard List (Static Dummy Data) */}
-                                        {[
-                                            { title: "Mastering Tailwind CSS Grid Layouts", desc: "A comprehensive guide to understanding grid template columns and responsive design patterns." },
-                                            { title: "The Future of AI in Web Development", desc: "How LLMs are changing the way we write code and debug applications in real-time." }
-                                        ].map((item, idx) => (
-                                            <div key={idx} className="bg-white rounded-3xl p-6 border border-gray-100 hover:border-blue-200 transition-all group cursor-pointer flex gap-4 items-start">
-                                                <div className="w-12 h-12 rounded-full bg-gray-50 shrink-0 flex items-center justify-center text-xl">✍️</div>
-                                                <div>
-                                                    <h4 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                                                        {item.title}
-                                                    </h4>
-                                                    <p className="text-gray-500 text-sm mt-1 line-clamp-2">
-                                                        {item.desc}
-                                                    </p>
+                                        {/* Standard List */}
+                                        <div className="space-y-4">
+                                            {[
+                                                { title: "Mastering Tailwind CSS Grid Layouts", desc: "A comprehensive guide to understanding grid template columns.", tag: "CSS" },
+                                                { title: "The Future of AI in Web Development", desc: "How LLMs are changing the way we write code and debug applications.", tag: "AI" }
+                                            ].map((item, idx) => (
+                                                <div key={idx} className="bg-white rounded-2xl p-5 md:p-6 border border-slate-100 hover:border-slate-300 transition-all group cursor-pointer flex flex-col md:flex-row gap-4 md:items-center justify-between">
+                                                    <div className="space-y-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <Badge variant="outline" className="text-[10px] text-slate-500 font-normal border-slate-200">{item.tag}</Badge>
+                                                            <span className="text-xs text-slate-400">2 days ago</span>
+                                                        </div>
+                                                        <h4 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                                                            {item.title}
+                                                        </h4>
+                                                        <p className="text-slate-500 text-sm line-clamp-1 max-w-xl">
+                                                            {item.desc}
+                                                        </p>
+                                                    </div>
+                                                    <div className="hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-slate-50 text-slate-400 group-hover:bg-black group-hover:text-white transition-all">
+                                                        <ArrowUpRight size={18} />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </TabsContent>
 
-                                    {/* 🔥 About Tab with Content */}
-                                    <TabsContent value="about">
-                                        <div className="bg-white rounded-3xl p-8 border border-gray-100 text-center">
-                                            <h3 className="text-xl font-bold mb-4">More About {fullName}</h3>
-                                            <p className="text-gray-600 leading-relaxed mb-6">
-                                                {bio}
-                                            </p>
-                                            <p className="text-gray-500 text-sm">
-                                                (This is a placeholder section. In the future, this will show your detailed Markdown bio, skill sets, and career timeline.)
-                                            </p>
+                                    {/* 🔥 About Tab */}
+                                    <TabsContent value="about" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                        <div className="bg-white rounded-[2rem] p-8 md:p-12 border border-slate-100 text-center relative overflow-hidden">
+                                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-20"></div>
+                                            <h3 className="text-xl font-bold mb-6 text-slate-900">More About {fullName}</h3>
+                                            <div className="max-w-2xl mx-auto space-y-6 text-slate-600 leading-relaxed font-light">
+                                                <p>{bio}</p>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
+                                                    Expertise in React, Node.js, and Cloud Architecture.
+                                                </p>
+                                            </div>
                                         </div>
                                     </TabsContent>
                                 </Tabs>
@@ -244,6 +289,16 @@ const Profile = () => {
                     </div>
                 </Container>
             </div>
+
+            {/* 📱 Mobile Floating Action Button (Write) */}
+            <div className="fixed bottom-6 right-6 z-50 sm:hidden">
+                <Link to="/dashboard/create-blog">
+                    <Button size="icon" className="h-14 w-14 rounded-full bg-slate-900 text-white shadow-xl shadow-slate-900/30 hover:bg-slate-800 transition-all active:scale-95">
+                        <Plus size={24} />
+                    </Button>
+                </Link>
+            </div>
+
         </div>
     );
 };

@@ -10,9 +10,10 @@ type TInputProps = {
     label?: string;
     disabled?: boolean;
     rules?: any;
+    className?: string; 
 };
 
-const ProBlogInput = ({ type, name, label, disabled, rules }: TInputProps) => {
+const ProBlogInput = ({ type, name, label, disabled, rules, className }: TInputProps) => { 
 
     const { control } = useFormContext();
 
@@ -22,7 +23,7 @@ const ProBlogInput = ({ type, name, label, disabled, rules }: TInputProps) => {
             name={name}
             rules={rules}
             render={({ field }) => (
-                <FormItem className="w-full!">
+                <FormItem className="w-full">
 
                     {label && <FormLabel>{label}</FormLabel>}
 
@@ -32,6 +33,7 @@ const ProBlogInput = ({ type, name, label, disabled, rules }: TInputProps) => {
                             type={type}
                             value={field.value ?? ""}
                             disabled={disabled}
+                            className={className} 
                         />
                     </FormControl>
 

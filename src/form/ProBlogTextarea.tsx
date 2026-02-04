@@ -10,6 +10,7 @@ type TTextareaProps = {
     rules?: any;
     placeholder?: string;
     rows?: number;
+    className?: string;
 };
 
 const ProBlogTextarea = (
@@ -19,6 +20,7 @@ const ProBlogTextarea = (
         rules,
         placeholder,
         rows = 4,
+        className,
     }: TTextareaProps
 ) => {
 
@@ -37,6 +39,7 @@ const ProBlogTextarea = (
                     <FormControl>
                         <Textarea
                             {...field}
+                            className={className}
                             id={name}
                             rows={rows}
                             placeholder={placeholder}

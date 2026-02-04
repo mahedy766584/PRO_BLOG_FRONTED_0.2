@@ -3,16 +3,21 @@ import { TrendingUp, Users, BarChart, MessageSquare } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import StatCard from '@/components/dashboard/StatCard';
 
+type TEntry = {
+  name: string;
+  value: number;
+}
+
 const DashboardHome: React.FC = () => {
   const COLORS = ['#0d9488', '#14b8a6', '#5eead4', '#ccfbf1'];
-  
+
   const trafficData = [
     { name: 'Mon', visits: 4000 }, { name: 'Tue', visits: 3000 },
     { name: 'Wed', visits: 2000 }, { name: 'Thu', visits: 2780 },
     { name: 'Fri', visits: 1890 }, { name: 'Sat', visits: 2390 },
     { name: 'Sun', visits: 3490 },
   ];
-  
+
   const deviceData = [
     { name: 'Desktop', value: 65 }, { name: 'Mobile', value: 25 }, { name: 'Tablet', value: 10 },
   ];
@@ -43,19 +48,19 @@ const DashboardHome: React.FC = () => {
               <option>Last Month</option>
             </select>
           </div>
-          <div className="h-[300px] w-full">
+          <div className="h-75 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={trafficData}>
                 <defs>
                   <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0d9488" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#0d9488" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#0d9488" stopOpacity={0.1} />
+                    <stop offset="95%" stopColor="#0d9488" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12}} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12}} />
-                <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                 <Area type="monotone" dataKey="visits" stroke="#0d9488" strokeWidth={3} fillOpacity={1} fill="url(#colorVisits)" />
               </AreaChart>
             </ResponsiveContainer>
@@ -68,12 +73,12 @@ const DashboardHome: React.FC = () => {
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie data={deviceData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
-                  {deviceData.map((entry, index) => (
+                  {deviceData.map((_entry: TEntry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip />
-                <Legend verticalAlign="bottom" height={36}/>
+                <Legend verticalAlign="bottom" height={36} />
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pb-8">

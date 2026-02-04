@@ -11,6 +11,8 @@ export type TAuthor = {
             lastName: string;
         },
         bio?: string;
+        _id?: string;
+        username?: string;
     };
 };
 

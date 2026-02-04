@@ -6,6 +6,9 @@ export type TRole = "user" | "author" | "admin";
 export type TUser = {
     userId: string;
     userName: string;
+    name?: string;    
+    image?: string;     
+    isPro?: boolean; 
     role: TRole;
     iat: number;
     exp: number;
