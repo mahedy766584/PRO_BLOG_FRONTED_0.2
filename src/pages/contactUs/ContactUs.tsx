@@ -145,7 +145,7 @@ const ContactUs = () => {
                                             label="Your Message"
                                             rules={{ required: "Message is required" }}
                                             placeholder="Write your thoughts here..."
-                                            className="bg-gray-50 border-gray-200 focus:border-black focus:ring-0 rounded-xl min-h-30 md:min-h-37/5 p-3 md:p-4"
+                                            className="bg-gray-50 border-gray-200 focus:border-black focus:ring-0 rounded-xl min-h-10 md:min-h-28 p-3 md:p-4"
                                         />
                                     </div>
 

@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { 
-    Share2, Facebook, Twitter, Linkedin, Copy, Clock, Calendar, 
-    ChevronRight, Heart, MessageCircle, Bookmark 
+import {
+    Share2, Facebook, Twitter, Linkedin, Copy, Clock, Calendar,
+    Heart, MessageCircle, Bookmark
 } from "lucide-react";
 
 import Container from "@/components/Container";
@@ -15,6 +14,8 @@ import BlogActions from "@/components/leftContent/BlogActions";
 import { useGetAllBlogQuery, useGetSingleBlogQuery } from "@/redux/features/blogManagement.api";
 import type { TBlog } from "@/types";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ShareButton from "./ShareButton";
+import BlogBreadcrumb from "@/components/BlogBreadcrumb";
 
 const BlogDetails = () => {
     const { blogId } = useParams<{ blogId: string; slug: string }>();
@@ -39,35 +40,28 @@ const BlogDetails = () => {
 
     return (
         <div className="relative bg-white min-h-screen font-sans selection:bg-blue-100 selection:text-blue-900 pb-20 lg:pb-0">
-            
+
             {/* --- Progress Bar (Sticky Top) --- */}
             <motion.div
-                className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-500 origin-left z-50"
+                className="fixed top-0 left-0 right-0 h-1 bg-liner-to-r from-blue-600 to-cyan-500 origin-left z-50"
                 style={{ scaleX }}
             />
 
             <Container className="pt-6 lg:pt-12">
-                
-                {/* --- Breadcrumb --- */}
-                <nav className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
-                    <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
-                    <ChevronRight size={14} />
-                    <Link to="/blogs" className="hover:text-blue-600 transition-colors">Blogs</Link>
-                    <ChevronRight size={14} />
-                    <span className="text-gray-900 font-medium truncate max-w-[150px] md:max-w-xs">{title}</span>
-                </nav>
+
+                <BlogBreadcrumb title={title} category={category?.name || ""} />
 
                 {/* --- Hero Section --- */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className="max-w-5xl mx-auto text-center space-y-6 mb-10 md:mb-16"
                 >
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-blue-50 text-blue-600 border border-blue-100">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-blue-50 text-main border border-blue-100">
                         {category?.name || "Technology"}
                     </span>
-                    
+
                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
                         {title}
                     </h1>
@@ -96,18 +90,18 @@ const BlogDetails = () => {
                 </motion.div>
 
                 {/* --- Hero Image (Parallax Feel) --- */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
-                    className="w-full aspect-video md:aspect-[21/9] rounded-xl md:rounded-3xl overflow-hidden mb-12 md:mb-20 shadow-xl ring-1 ring-gray-900/5"
+                    className="w-full aspect-video md:aspect-21/9 rounded-xl md:rounded-3xl overflow-hidden mb-12 md:mb-20 shadow-xl ring-1 ring-gray-900/5"
                 >
                     <img src={coverImage} alt={title} className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000 ease-out" />
                 </motion.div>
 
                 {/* --- Main Grid Layout --- */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-                    
+
                     {/* Left: Sticky Share (Desktop Only) */}
                     <div className="hidden lg:block lg:col-span-1">
                         <div className="sticky top-32 flex flex-col gap-6 items-center">
@@ -133,14 +127,14 @@ const BlogDetails = () => {
 
                         {/* Tags & Bottom Actions */}
                         <div className="mt-12 pt-8 border-t border-gray-100">
-                             <BlogActions blogId={blogId} />
+                            <BlogActions blogId={blogId} />
                         </div>
                     </div>
 
                     {/* Right: Sidebar */}
                     <div className="col-span-1 lg:col-span-4 space-y-12">
                         {/* Author Widget */}
-                        <div className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <div className="bg-liner-to-br from-gray-50 to-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">About Author</h3>
                             <div className="flex flex-col items-center text-center">
                                 <img src={author?.profileImage} className="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-white shadow-md" alt="" />
@@ -156,7 +150,7 @@ const BlogDetails = () => {
 
                         {/* Top Authors */}
                         <TopAuthors />
-                        
+
                         {/* Newsletter (Optional Premium Touch) */}
                         <div className="bg-blue-600 p-6 rounded-2xl text-white text-center">
                             <h3 className="font-bold text-lg mb-2">Subscribe to our newsletter</h3>
@@ -208,17 +202,5 @@ const BlogDetails = () => {
         </div>
     );
 };
-
-// Helper Component for Social Buttons (Desktop)
-const ShareButton = ({ icon, label }: { icon: React.ReactNode, label?: string }) => (
-    <button className="group relative flex items-center justify-center w-10 h-10 rounded-full text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
-        {icon}
-        {label && (
-            <span className="absolute left-14 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                {label}
-            </span>
-        )}
-    </button>
-);
 
 export default BlogDetails;

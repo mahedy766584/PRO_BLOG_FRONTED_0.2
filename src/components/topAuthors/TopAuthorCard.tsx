@@ -2,7 +2,7 @@ import type { TAuthorCardProps } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SocialProfile from "../common/profile/SocialProfile";
 import { BadgeCheck, ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom"; // Link ইম্পোর্ট করতে ভুলবেন না
+import { Link } from "react-router-dom";
 
 const TopAuthorCard = ({ author }: TAuthorCardProps) => {
     const { user } = author || {};
