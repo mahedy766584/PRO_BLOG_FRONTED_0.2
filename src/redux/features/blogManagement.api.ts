@@ -10,6 +10,14 @@ const blogManagementApi = baseApi.injectEndpoints({
                 }
             }
         }),
+        getAuthorPosts: builder.query({
+            query: (userId) => {
+                return {
+                    url: `/blogs/${userId}/author-posts`,
+                    method: "GET",
+                }
+            }
+        }),
         getSingleBlog: builder.query({
             query: (blogId) => {
                 return {
@@ -32,4 +40,5 @@ export const {
     useGetAllBlogQuery,
     useWriteBlogMutation,
     useGetSingleBlogQuery,
+    useGetAuthorPostsQuery
 } = blogManagementApi;

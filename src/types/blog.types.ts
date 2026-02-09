@@ -18,11 +18,12 @@ export type TBlog = {
     excerpt: string;
     user?: TUser | undefined;
     author?: TUser | undefined;
-    createdAt?: Date;
+    createdAt?: Date | undefined;
     profileImage?: string;
     readTime?: string;
     slug?: string;
     category?: TCategory;
+    status?: string;
 };
 
 export type BlogCardProps = {

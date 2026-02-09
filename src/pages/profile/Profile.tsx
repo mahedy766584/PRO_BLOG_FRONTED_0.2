@@ -1,17 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-    MapPin, Calendar, Globe, Edit3,
+    MapPin, Calendar, Globe,
     Github, Twitter, Linkedin, CheckCircle2,
     TrendingUp, FileText, Users, ArrowUpRight, Mail,
-    PenLine, Plus, Sparkles
+    PenLine, Plus, Sparkles, Camera,
 } from "lucide-react";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import useCurrentUserProfile from "@/utils/UseCurrentUserProfile";
-import { Link } from "react-router-dom"; // Ensure react-router-dom is installed
+import { Link } from "react-router-dom";
+import MyBlogsTab from "./MyBlogsTab";// 👈 নতুন ইমপোর্ট
+// import EditProfileModal from "./EditProfileModal";
 
 const Profile = () => {
     const { data: userData, isLoading } = useCurrentUserProfile();
@@ -20,12 +21,13 @@ const Profile = () => {
 
     const {
         name,
-        role = "Author",
-        userName = "username",
+        role,
+        userName,
         profileImage,
-        bio = "Passionate Full-stack developer & UI Enthusiast. Building digital products that make a difference.",
+        bio,
         createdAt,
-        email = "user@example.com",
+        email,
+        _id,
     } = userData?.data || {};
 
     const firstName = name?.firstName || "Unknown";
@@ -34,36 +36,40 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-[#FAFAFA] pb-20 relative selection:bg-slate-900 selection:text-white">
-            
-            {/* 🌟 Background Ambient Mesh */}
+
+            {/* 🌟 Background Ambient Mesh (Same as before) */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-blue-100/40 blur-[120px]" />
                 <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-100/40 blur-[120px]" />
             </div>
 
-            {/* 🌟 Cinematic Banner (Responsive Height) */}
-            <div className="h-48 md:h-80 w-full relative z-10 group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black">
-                    <div className="absolute inset-0 opacity-15 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
-                    {/* Decorative pattern */}
+            {/* 🌟 Cinematic Banner */}
+            <div className="h-48 md:h-80 w-full relative z-10 group overflow-hidden bg-slate-900">
+                <div className="absolute inset-0 bg-linear-to-br from-slate-900 via-slate-800 to-black">
+                    <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 </div>
-                
-                {/* Edit Cover Button */}
-                <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 group-hover:translate-y-0">
-                    <Button variant="outline" size="sm" className="bg-black/20 backdrop-blur-md text-white border-white/20 hover:bg-white/20 hover:text-white rounded-full">
-                        <Edit3 size={14} className="mr-2" /> Change Cover
+
+                <div className="absolute top-28 right-28.5 z-50">
+                     {/* 💡 এখানেও এডিট মোডাল ট্রিগার করতে পারেন ভবিষ্যতে */}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="bg-black/40 hover:bg-black/70 backdrop-blur-md text-white border border-white/20 rounded-full shadow-lg transition-all duration-200 cursor-pointer flex items-center gap-2 px-4 py-2"
+                    >
+                        <Camera size={16} />
+                        <span className="font-medium text-sm">Change Cover</span>
                     </Button>
                 </div>
             </div>
 
             <div className="relative z-20">
                 <Container>
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 -mt-20 md:-mt-28">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 -mt-10 md:-mt-28">
 
                         {/* ➤ LEFT SIDEBAR (Identity) */}
                         <div className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-6">
-                            
+
                             {/* 🌟 Profile Card */}
                             <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] p-6 shadow-2xl shadow-slate-200/50 border border-white/50 relative">
                                 {/* Avatar Wrapper */}
@@ -86,7 +92,7 @@ const Profile = () => {
                                         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
                                             {fullName}
                                         </h1>
-                                        {(role === 'admin' || role === 'author') && 
+                                        {(role === 'admin' || role === 'author') &&
                                             <CheckCircle2 className="text-blue-500 fill-blue-50 w-5 h-5 md:w-6 md:h-6" />
                                         }
                                     </div>
@@ -101,11 +107,13 @@ const Profile = () => {
 
                                 {/* Bio */}
                                 <p className="mt-6 text-center text-slate-600 leading-relaxed font-light text-sm md:text-base px-2">
-                                    {bio}
+                                    {bio || "Write something about yourself..."}
                                 </p>
 
-                                {/* Connect Button */}
+                                {/* 👇 EDIT PROFILE BUTTON / MODAL */}
                                 <div className="mt-8 space-y-6">
+                                    {/* এখানে 'userData.data' পাস করছি যাতে ডিফল্ট ভ্যালু ফর্মে দেখায় */}
+                                    {/* <EditProfileModal userData={userData?.data} />  */}
                                     <button className="group relative w-full inline-flex h-11 md:h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                                         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
                                         <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl transition-all group-hover:bg-slate-900 gap-2">
@@ -113,7 +121,7 @@ const Profile = () => {
                                         </span>
                                     </button>
 
-                                    {/* Social Icons */}
+                                    {/* Social Icons (Read only for now) */}
                                     <div className="flex justify-center gap-4 border-t border-slate-100 pt-6">
                                         {[
                                             { Icon: Github, href: "#" },
@@ -127,11 +135,14 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-
+                            
+                             {/* ...Rest of the code (Info Card, Stats, Tabs) remains same... */}
+                             {/* শুধু 'Personal Details' সেকশনটি ডাটা অনুযায়ী ডায়নামিক আছে তা নিশ্চিত করবেন */}
+                             
                             {/* 🌟 Info Card (Desktop Only) */}
                             <div className="hidden lg:block bg-white/60 backdrop-blur-md rounded-3xl p-6 shadow-sm border border-slate-100 space-y-5">
                                 <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
-                                    <Sparkles size={14} className="text-amber-500"/> Personal Details
+                                    <Sparkles size={14} className="text-amber-500" /> Personal Details
                                 </h3>
                                 <div className="space-y-4 text-sm font-medium">
                                     <div className="flex items-center gap-4 text-slate-600 group">
@@ -154,10 +165,9 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        {/* ➤ RIGHT CONTENT */}
+                        {/* ➤ RIGHT CONTENT (Same as before) */}
                         <div className="lg:col-span-8 space-y-8 lg:mt-8">
-
-                            {/* 🌟 Stats Grid */}
+                            {/* ... Stats Grid ... */}
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
                                 {[
                                     { label: "Total Views", value: "84.2k", trend: "+12%", icon: TrendingUp, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
@@ -165,6 +175,7 @@ const Profile = () => {
                                     { label: "Followers", value: "2.1k", trend: "+5%", icon: Users, color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
                                 ].map((stat, idx) => (
                                     <div key={idx} className={`bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl border ${stat.border} shadow-sm hover:shadow-md transition-all group relative overflow-hidden`}>
+                                        {/* ... card content same ... */}
                                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
                                             <stat.icon size={60} className={stat.color} />
                                         </div>
@@ -184,34 +195,26 @@ const Profile = () => {
                             </div>
 
                             {/* 🌟 Content Area with Tabs */}
-                            <div className="min-h-[500px]">
+                            <div className="min-h-125">
                                 <Tabs defaultValue="articles" className="w-full">
-                                    
-                                    {/* Tab Header & Action Button */}
-                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4 sticky top-[70px] lg:top-0 z-30 bg-[#FAFAFA]/80 backdrop-blur-lg py-2">
+                                   {/* ... Tabs List same ... */}
+                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4 sticky top-17.5 lg:top-0 z-30 bg-[#FAFAFA]/80 backdrop-blur-lg py-2">
                                         <TabsList className="bg-white p-1.5 rounded-full border border-slate-200 shadow-sm w-full sm:w-auto h-auto">
-                                            <TabsTrigger value="articles" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">
-                                                Latest Stories
-                                            </TabsTrigger>
-                                            <TabsTrigger value="about" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">
-                                                About Me
-                                            </TabsTrigger>
+                                            <TabsTrigger value="articles" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">Latest Stories</TabsTrigger>
+                                            <TabsTrigger value="about" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">About Me</TabsTrigger>
+                                            <TabsTrigger value="my-blogs" className="rounded-full px-4 md:px-6 py-2 text-xs md:text-sm font-medium data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all">My Blogs</TabsTrigger>
                                         </TabsList>
-
-                                        {/* Desktop Create Blog Button */}
-                                        <Link to="/dashboard/create-blog" className="hidden sm:block">
+                                        <Link to="/write-blog" className="hidden sm:block">
                                             <Button className="rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-slate-900/20 transition-all flex items-center gap-2 px-5 h-11">
-                                                <PenLine size={16} />
-                                                <span className="font-medium">Write a Story</span>
+                                                <PenLine size={16} /> <span className="font-medium">Write a Story</span>
                                             </Button>
                                         </Link>
                                     </div>
 
-                                    {/* 🔥 Articles Tab */}
-                                    <TabsContent value="articles" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                        
-                                        {/* Featured Card */}
-                                        <div className="bg-white rounded-[1.5rem] p-1.5 shadow-sm border border-slate-100 group cursor-pointer hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                                    {/* Tabs Content */}
+                                    <TabsContent value="articles" className="space-y-6">
+                                        {/* ... Articles content same ... */}
+                                         <div className="bg-white rounded-[1.5rem] p-1.5 shadow-sm border border-slate-100 group cursor-pointer hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
                                             <div className="grid md:grid-cols-2 gap-4 md:gap-6 p-4">
                                                 <div className="h-48 md:h-full rounded-2xl overflow-hidden relative">
                                                     <img
@@ -224,24 +227,15 @@ const Profile = () => {
                                                     </Badge>
                                                 </div>
                                                 <div className="flex flex-col justify-center space-y-3 pr-2">
-                                                    <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
-                                                        Development
-                                                    </div>
-                                                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
-                                                        Why I moved from Redux to Zustand in 2026?
-                                                    </h3>
-                                                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
-                                                        State management has evolved. Here is a deep dive into why simplicity wins over complexity in modern React apps.
-                                                    </p>
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">Development</div>
+                                                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">Why I moved from Redux to Zustand?</h3>
+                                                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">State management has evolved. Here is a deep dive.</p>
                                                     <div className="flex items-center gap-4 text-xs text-slate-400 font-medium pt-2 border-t border-slate-50 mt-2">
-                                                        <span>Jan 24, 2026</span>
-                                                        <span>•</span>
-                                                        <span>5 min read</span>
+                                                        <span>Jan 24, 2026</span><span>•</span><span>5 min read</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         {/* Standard List */}
                                         <div className="space-y-4">
                                             {[
@@ -269,18 +263,20 @@ const Profile = () => {
                                         </div>
                                     </TabsContent>
 
-                                    {/* 🔥 About Tab */}
-                                    <TabsContent value="about" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <TabsContent value="about">
                                         <div className="bg-white rounded-[2rem] p-8 md:p-12 border border-slate-100 text-center relative overflow-hidden">
-                                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-20"></div>
+                                            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-blue-500 to-transparent opacity-20"></div>
                                             <h3 className="text-xl font-bold mb-6 text-slate-900">More About {fullName}</h3>
                                             <div className="max-w-2xl mx-auto space-y-6 text-slate-600 leading-relaxed font-light">
-                                                <p>{bio}</p>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.
-                                                    Expertise in React, Node.js, and Cloud Architecture.
-                                                </p>
+                                                <p>{bio || "No bio added yet."}</p>
                                             </div>
+                                        </div>
+                                    </TabsContent>
+                                    
+                                    <TabsContent value="my-blogs">
+                                        <div className="bg-white rounded-[2rem] p-8 md:p-12 border border-slate-100 text-center relative overflow-hidden">
+                                            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-blue-500 to-transparent opacity-20"></div>
+                                            <MyBlogsTab userId={_id} />
                                         </div>
                                     </TabsContent>
                                 </Tabs>
@@ -289,16 +285,15 @@ const Profile = () => {
                     </div>
                 </Container>
             </div>
-
-            {/* 📱 Mobile Floating Action Button (Write) */}
-            <div className="fixed bottom-6 right-6 z-50 sm:hidden">
-                <Link to="/dashboard/create-blog">
+            
+            {/* Mobile Action Button */}
+             <div className="fixed bottom-6 right-6 z-50 sm:hidden">
+                <Link to="/write-blog">
                     <Button size="icon" className="h-14 w-14 rounded-full bg-slate-900 text-white shadow-xl shadow-slate-900/30 hover:bg-slate-800 transition-all active:scale-95">
                         <Plus size={24} />
                     </Button>
                 </Link>
             </div>
-
         </div>
     );
 };

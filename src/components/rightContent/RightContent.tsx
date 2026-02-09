@@ -23,7 +23,7 @@ const RightCart = () => {
     const blogResponseCount = blogResponse?.data?.result?.length || 5;
     return (
         <div className="px-4">
-            <h1 className="text-xl font-medium mt-10 mb-10">
+            <h1 className="text-xl font-medium mt-16 mb-10">
                 <span className="bg-[#00AAA1] text-[#E8F3F3]">Popular</span> Posted
             </h1>
             <ScrollWithIndicator>

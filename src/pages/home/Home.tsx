@@ -19,9 +19,9 @@ const Home = () => {
                 <Container>
                     <div className="w-full lg:h-[calc(100vh-30px)]">
                         {/* Left side */}
-                        <div className="lg:flex justify-between mb-6 relative">
+                        <div className="lg:flex justify-between mt-16 mb-6 relative">
                             <div className="lg:px-0 px-2.5">
-                                <h1 className="text-xl font-medium mt-10 mb-10">
+                                <h1 className="text-xl font-medium mt-16 mb-10">
                                     <span className="bg-[#00AAA1] text-[#E8F3F3]">Featured</span> This month
                                 </h1>
                                 <div className="h-[74vh] w-full overflow-auto scrollbar-custom grid lg:grid-cols-2 grid-cols-1 gap-3">
