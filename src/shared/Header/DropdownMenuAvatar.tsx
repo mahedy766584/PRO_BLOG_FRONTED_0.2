@@ -13,7 +13,7 @@ import { logout } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { dropdownMenuItem } from "./dropDownMenuItem";
 import { LogOut, type LucideIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserCurrentUserProfile from "../../utils/UseCurrentUserProfile";
 
 type TDropDownMenu = {
@@ -24,6 +24,8 @@ type TDropDownMenu = {
 
 const DropdownMenuAvatar = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const user = UserCurrentUserProfile();
 
@@ -31,6 +33,11 @@ const DropdownMenuAvatar = () => {
 
     const handleLogout = () => {
         dispatch(logout());
+
+        navigate("/landing", {
+            state: { from: location },
+            replace: true
+        });
     };
 
     return (

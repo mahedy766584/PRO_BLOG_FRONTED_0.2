@@ -58,7 +58,9 @@ export const proBlogRoute = createBrowserRouter([
             },
             {
                 path: "write-blog",
-                element: <WriteBlog />
+                element: <ProtectedRoute role={"author"}>
+                    <WriteBlog />
+                </ProtectedRoute>
             },
             {
                 path: "about",

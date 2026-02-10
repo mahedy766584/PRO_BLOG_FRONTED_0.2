@@ -11,8 +11,11 @@ import LoginView from "./LoginView";
 import SignupView from "./SignupView";
 
 type AuthView = "login" | "signup";
+type AuthModalProps = {
+    buttonTitle: string;
+};
 
-const AuthModal = () => {
+const AuthModal = ({ buttonTitle }: AuthModalProps) => {
     const [open, setOpen] = useState(false);
     const [view, setView] = useState<AuthView>("login");
 
@@ -25,7 +28,7 @@ const AuthModal = () => {
                     setOpen(true);
                 }}
             >
-                Get started
+                {buttonTitle}
             </Button>
 
             <Dialog open={open} onOpenChange={setOpen}>

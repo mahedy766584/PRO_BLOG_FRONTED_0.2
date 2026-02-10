@@ -17,7 +17,7 @@ const ContactUs = () => {
     };
 
     return (
-        <div className="relative min-h-screen bg-gray-50 flex items-center py-10 md:py-20 overflow-hidden px-4 md:px-0">
+        <div className="relative min-h-screen bg-gray-50 flex items-center mt-10 py-10 md:py-20 overflow-hidden px-4 md:px-0">
             
             {/* Background Decoration (Adjusted for Mobile) */}
             <div className="absolute top-[-5%] right-[-10%] w-48 h-48 md:w-96 md:h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>

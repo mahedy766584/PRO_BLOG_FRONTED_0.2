@@ -2,14 +2,14 @@
 import ProBlogForm from "@/form/ProBlogForm";
 import ProBlogInput from "@/form/ProBlogInput";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/redux/hooks";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser } from "@/redux/features/auth/authSlice";
-import { useState } from "react"; 
+import { useState } from "react";
 
 import {
     NativeSelect,
@@ -30,11 +30,14 @@ const demoCredentials: Record<string, { username: string; password: string }> = 
 
 const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const [login] = useLoginMutation();
 
     const [formValues, setFormValues] = useState({ username: "", password: "" });
     const [formKey, setFormKey] = useState(0);
+
+    const from = location.state?.from?.pathname || "/";
 
     const loginHandler: SubmitHandler<FieldValues> = async (data) => {
         const toastId = toast.loading('Logging in...');
@@ -51,7 +54,7 @@ const LoginView = ({ switchToSignup, closeModal }: LoginViewProps) => {
 
             if (res.success) {
                 closeModal();
-                navigate("/");
+                navigate(from, { replace: true });
             }
 
         } catch (err: any) {

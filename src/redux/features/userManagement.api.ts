@@ -15,6 +15,13 @@ const userManagementApi = baseApi.injectEndpoints({
                     url: `/users/${userId}`,
                     method: "GET",
                 })
+            }),
+            updateUser: builder.mutation({
+                query: ({userId, data}) => ({
+                    url: `users/${userId}`,
+                    method: "PATCH",
+                    body: data,
+                }),
             })
         }
     )
@@ -23,4 +30,5 @@ const userManagementApi = baseApi.injectEndpoints({
 export const {
     useAddNewUserMutation,
     useGetSingleUserQuery,
+    useUpdateUserMutation,
 } = userManagementApi;

@@ -7,7 +7,7 @@ import { Instagram } from "lucide-react";
 const TopAuthors = () => {
 
     const { data: authors } = useGetAllAuthorQuery(undefined);
-    console.log(authors)
+    // console.log(authors)
 
     return (
         <div>

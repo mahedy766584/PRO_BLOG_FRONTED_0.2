@@ -11,8 +11,8 @@ import {
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import useCurrentUserProfile from "@/utils/UseCurrentUserProfile";
 import { Link } from "react-router-dom";
-import MyBlogsTab from "./MyBlogsTab";// 👈 নতুন ইমপোর্ট
-// import EditProfileModal from "./EditProfileModal";
+import MyBlogsTab from "./MyBlogsTab";
+import EditProfileModal from "./EditProfileModal";
 
 const Profile = () => {
     const { data: userData, isLoading } = useCurrentUserProfile();
@@ -113,7 +113,7 @@ const Profile = () => {
                                 {/* 👇 EDIT PROFILE BUTTON / MODAL */}
                                 <div className="mt-8 space-y-6">
                                     {/* এখানে 'userData.data' পাস করছি যাতে ডিফল্ট ভ্যালু ফর্মে দেখায় */}
-                                    {/* <EditProfileModal userData={userData?.data} />  */}
+                                    <EditProfileModal userData={userData?.data} /> 
                                     <button className="group relative w-full inline-flex h-11 md:h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                                         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
                                         <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl transition-all group-hover:bg-slate-900 gap-2">

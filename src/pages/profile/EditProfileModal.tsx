@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-// import { useUpdateProfileMutation } from "@/redux/features/userManagement.api";
+import { useUpdateUserMutation } from "@/redux/features/userManagement.api";
 import { Camera, Loader2, PenLine, User, UploadCloud } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ import { toast } from "sonner";
 
 const EditProfileModal = ({ userData }: { userData: any }) => {
     const [open, setOpen] = useState(false);
-    const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+    const [updateProfile, { isLoading }] = useUpdateUserMutation();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     // React Hook Form Setup

@@ -76,7 +76,7 @@ const Header = () => {
 
                     {/* Premium Write Button */}
                     <Link
-                        to={'/writeBlog'}
+                        to={'/write-blog'}
                         className="flex items-center gap-2 px-4 py-2 bg-[#00AAA1] text-white rounded-full hover:bg-[#008f87] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 text-sm font-medium"
                     >
                         <SquarePen size={18} />
@@ -173,7 +173,7 @@ const Header = () => {
                                 <DropdownMenuAvatar />
                             </div>
                             <Link
-                                to={'/writeBlog'}
+                                to={'/write-blog'}
                                 className="flex w-full items-center justify-center gap-2 bg-[#00AAA1] text-white py-3 rounded-xl font-medium shadow-md active:scale-95 transition-transform"
                             >
                                 <SquarePen size={20} />

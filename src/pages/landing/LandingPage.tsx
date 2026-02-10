@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import bgImage from "../../assets/landingPageBG/bg2.png";
 import { footerLink, navLinks } from "./linksItems";
 import Logo from "@/shared/logo/Logo";
-import { Button } from "@/components/ui/button";
 import AuthModal from "@/components/auth/AuthModal";
 
 const LandingPage = () => {
@@ -18,7 +17,7 @@ const LandingPage = () => {
                             </NavLink>
                         ))}
                     </div>
-                    <AuthModal/>
+                    <AuthModal buttonTitle="Get Start"/>
                 </div>
             </nav>
 
@@ -31,9 +30,7 @@ const LandingPage = () => {
 
                     <p className="lg:text-2xl text-third ">Where storytellers, thinkers, and dreamers connect through imagination.</p>
 
-                    <Button className="cursor-pointer">
-                        Explore an idea
-                    </Button>
+                    <AuthModal buttonTitle="Explore an idea"/>
 
                 </div>
                 <div className="lg:flex hidden">
