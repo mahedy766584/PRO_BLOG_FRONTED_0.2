@@ -14,7 +14,8 @@ import { useAppDispatch } from "@/redux/hooks";
 import { dropdownMenuItem } from "./dropDownMenuItem";
 import { LogOut, type LucideIcon } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserCurrentUserProfile from "../../utils/UseCurrentUserProfile";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 type TDropDownMenu = {
     label: string;
@@ -27,9 +28,9 @@ const DropdownMenuAvatar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const user = UserCurrentUserProfile();
+    const { user, isLoading } = useCurrentUser();
 
-    const { profileImage, email, name } = user?.data?.data || {};
+    const { profileImage, email, name } = user || {};
 
     const handleLogout = () => {
         dispatch(logout());
@@ -39,6 +40,10 @@ const DropdownMenuAvatar = () => {
             replace: true
         });
     };
+
+    if (isLoading && !user) {
+        return <LoadingSpinner/>;
+    }
 
     return (
         <DropdownMenu>

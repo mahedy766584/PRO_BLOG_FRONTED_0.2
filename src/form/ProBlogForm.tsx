@@ -12,7 +12,7 @@ type TFormProps = {
     children: ReactNode;
 } & TFormConfig;
 
-const ProBlogForm = ({ children, onSubmit, defaultValues = {}, resolver }: TFormProps) => {
+const ProBlogForm = ({ children, onSubmit, defaultValues = {}, resolver, }: TFormProps) => {
     const methods = useForm({
         defaultValues,
         resolver,

@@ -22,6 +22,14 @@ const userManagementApi = baseApi.injectEndpoints({
                     method: "PATCH",
                     body: data,
                 }),
+            }),
+            updateProfileImage: builder.mutation({
+                query: ({userId, data}) => ({
+                    url: `users/${userId}/update-profile-image`,
+                    method: "PATCH",
+                    body: data,
+                }),
+                invalidatesTags: ["User"],
             })
         }
     )
@@ -31,4 +39,5 @@ export const {
     useAddNewUserMutation,
     useGetSingleUserQuery,
     useUpdateUserMutation,
+    useUpdateProfileImageMutation,
 } = userManagementApi;

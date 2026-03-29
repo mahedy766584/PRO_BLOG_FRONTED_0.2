@@ -11,7 +11,9 @@ type TInputProps = {
     disabled?: boolean;
     rules?: RegisterOptions;
     className?: string; 
+    labelClassName?: string;
     placeholder?: string;
+    defaultValue?: string;
 };
 
 const ProBlogInput = ({ 
@@ -21,7 +23,9 @@ const ProBlogInput = ({
     disabled, 
     rules, 
     className, 
-    placeholder 
+    placeholder,
+    labelClassName,
+    defaultValue,
 }: TInputProps) => { 
 
     const [showPassword, setShowPassword] = useState(false);
@@ -41,14 +45,14 @@ const ProBlogInput = ({
             render={({ field }) => (
                 <FormItem className="w-full">
 
-                    {label && <FormLabel>{label}</FormLabel>}
+                    {label && <FormLabel className={`${labelClassName}`}>{label}</FormLabel>}
 
                     <FormControl>
                         <div className="relative">
                             <Input
                                 {...field}
                                 type={inputType} 
-                                value={field.value ?? ""}
+                                value={field.value ?? defaultValue}
                                 disabled={disabled}
                                 className={`${className} ${type === "password" ? "pr-10" : ""}`} 
                                 placeholder={placeholder}
