@@ -30,7 +30,14 @@ const userManagementApi = baseApi.injectEndpoints({
                     body: data,
                 }),
                 invalidatesTags: ["User"],
-            })
+            }),
+            deleteUser: builder.mutation({
+                query: ({userId}) =>({
+                    url: `users/${userId}`,
+                    method: "DELETE",
+                }),
+                invalidatesTags: ["User"],
+            }),
         }
     )
 });
@@ -40,4 +47,5 @@ export const {
     useGetSingleUserQuery,
     useUpdateUserMutation,
     useUpdateProfileImageMutation,
+    useDeleteUserMutation,
 } = userManagementApi;

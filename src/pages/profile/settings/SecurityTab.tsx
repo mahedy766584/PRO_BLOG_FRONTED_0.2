@@ -4,10 +4,51 @@ import { TabsContent } from "@/components/ui/tabs";
 import { ShieldAlert, Loader2 } from "lucide-react";
 import ProBlogForm from "@/form/ProBlogForm";
 import ProBlogInput from "@/form/ProBlogInput";
+import type { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
+import { useChangePasswordMutation } from "@/redux/features/passwordManagement.api";
+import { useNavigate } from "react-router-dom";
+import { useDeleteUserMutation } from "@/redux/features/userManagement.api";
+import { useAppSelector } from "@/redux/hooks";
 
-export const SecurityTab = ({ onPasswordSubmit, isLoading }: any) => {
+export const SecurityTab = () => {
 
-    
+    const navigate = useNavigate();
+
+    const [changePassword, { isLoading }] = useChangePasswordMutation();
+    const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+    const { user } = useAppSelector((state) => state.auth);
+
+    const handleChangePassword: SubmitHandler<FieldValues> = async (data: any) => {
+        try {
+            if (data.newPassword !== data.confirmPassword) {
+                return toast.error("New password and confirm password do not match!");
+            }
+            const updateData = {
+                oldPassword: data.currentPassword,
+                newPassword: data.newPassword
+            };
+            await changePassword(updateData);
+            toast.success("Password updated successfully!");
+        } catch (error: any) {
+            console.error("Password update error:", error);
+            const errorMessage = error?.response?.data?.message || "Something went wrong!";
+            toast.error(errorMessage);
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        const isConfirmed = window.confirm("Are you sure? This is permanent!");
+        if (!isConfirmed) return;
+        try {
+            await deleteUser(user?.userId).unwrap();
+            toast.success("Account deleted successfully");
+            localStorage.removeItem("accessToken");
+            navigate("/login");
+        } catch (err: any) {
+            toast.error(err?.data?.message || "Failed to delete account");
+        }
+    };
 
     return (
         <TabsContent value="security" className="space-y-6 animate-in fade-in-50 duration-300 outline-none">
@@ -15,15 +56,14 @@ export const SecurityTab = ({ onPasswordSubmit, isLoading }: any) => {
                 <h3 className="text-xl font-bold text-slate-900">Security Settings</h3>
                 <p className="text-sm text-slate-500">Update your password to keep your account secure.</p>
             </div>
-
-            <ProBlogForm onSubmit={onPasswordSubmit}>
+            <ProBlogForm onSubmit={handleChangePassword}>
                 <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-5">
-                    <ProBlogInput name="currentPassword" label="Current Password" type="password" placeholder="••••••••" />
+                    <ProBlogInput name="oldPassword" label="Current Password" type="password" placeholder="••••••••" />
                     <div className="grid md:grid-cols-2 gap-4">
                         <ProBlogInput name="newPassword" label="New Password" type="password" placeholder="••••••••" />
                         <ProBlogInput name="confirmPassword" label="Confirm New Password" type="password" placeholder="••••••••" />
                     </div>
-                    <Button type="submit" disabled={isLoading} className="bg-slate-900 text-white rounded-xl">
+                    <Button type="submit" disabled={isLoading} className="bg-slate-900 cursor-pointer text-white rounded-xl">
                         {isLoading ? <Loader2 className="animate-spin mr-2" size={16} /> : "Update Password"}
                     </Button>
                 </div>
@@ -40,8 +80,8 @@ export const SecurityTab = ({ onPasswordSubmit, isLoading }: any) => {
                         <p className="text-sm text-red-600/80 mt-1">Once you delete your account, there is no going back. Please be certain.</p>
                     </div>
                 </div>
-                <Button variant="outline" className="w-full border-red-200 text-red-600 hover:bg-red-100 hover:text-red-700 font-medium rounded-xl">
-                    Permanently Delete My Account
+                <Button onClick={handleDeleteAccount} disabled={isDeleting} variant="outline" className="w-full cursor-pointer border-red-200 text-red-600 hover:bg-red-100 hover:text-red-700 font-medium rounded-xl">
+                    {isDeleting ? "Deleting..." : "Permanently Delete My Account"}
                 </Button>
             </div>
         </TabsContent>
